@@ -7,10 +7,11 @@ const crypto   = require('crypto');
 const mongoose = require('mongoose');
 const jwt      = require('jsonwebtoken');
 const { QUESTIONS_DB } = require('./questions');
-const { BIBLE_QUESTIONS } = require('./bibleQuestions');
 const User              = require('./models/User');
 const TournamentPlayer  = require('./models/TournamentPlayer');
 const TournamentSchedule = require('./models/TournamentSchedule');
+const WinnerSubmission  = require('./models/WinnerSubmission');
+const Question          = require('./models/Question');
 const { log } = require('console');
 
 // ─── Hardcoded admin credentials ─────────────────────────────────────────────
@@ -58,11 +59,71 @@ const spectators  = new Set();   // set of socketIds for view-only clients
 // Leaderboard: username → { username, wins, stage }
 const leaderboard = new Map();
 
-// specialSession: set by admin via REST or admin socket event
-let specialSession = { active: true, questions: [] };
+// Runtime question bank. Populated from MongoDB on startup so matches can read
+// synchronously with zero DB hits per question.
+let questionBank = [];
 
-// Required lobby size for special session (normal sessions pair immediately)
-const SPECIAL_LOBBY_REQUIRED = 10;
+// Load all questions from the MongoDB collection into the in-memory cache.
+// Safe to call repeatedly — fully replaces the in-memory bank from the DB.
+async function loadQuestionBankFromDB() {
+  if (!mongoUp()) {
+    console.log('⚠️  Mongo not connected — skipping question-bank load from DB');
+    return 0;
+  }
+  try {
+    const docs = await Question.find({}, { _id: 0, id: 1, question: 1, options: 1, correct: 1, category: 1 }).lean();
+    questionBank = docs.map(d => ({
+      id: d.id,
+      question: d.question,
+      options: d.options,
+      correct: d.correct,
+      category: d.category || 'General',
+    }));
+    console.log(`✅ Loaded ${questionBank.length} questions from MongoDB into memory`);
+    return questionBank.length;
+  } catch (e) {
+    console.error('⚠️  loadQuestionBankFromDB failed:', e.message);
+    return 0;
+  }
+}
+
+// Fallback loader: read `questions.example.json` straight off disk.
+// Used at startup when MongoDB is unavailable or the collection is empty,
+// so the tournament can run from the JSON file alone.
+function loadQuestionBankFromFile() {
+  const fs = require('fs');
+  const path = require('path');
+  const filePath = path.join(__dirname, 'questions.example.json');
+  try {
+    if (!fs.existsSync(filePath)) {
+      console.log(`⚠️  ${filePath} not found — no fallback question bank`);
+      return 0;
+    }
+    const raw = fs.readFileSync(filePath, 'utf8');
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) {
+      console.error('⚠️  questions.example.json must contain an array');
+      return 0;
+    }
+    questionBank = parsed.filter(q =>
+      q && q.id && q.question && q.options && ['A','B','C','D'].includes(q.correct)
+    ).map(q => ({
+      id: q.id,
+      question: q.question,
+      options: q.options,
+      correct: q.correct,
+      category: q.category || 'General',
+    }));
+    console.log(`✅ Loaded ${questionBank.length} questions from questions.example.json into memory`);
+    return questionBank.length;
+  } catch (e) {
+    console.error('⚠️  loadQuestionBankFromFile failed:', e.message);
+    return 0;
+  }
+}
+
+// Live admin sockets — receive real-time winner submission notifications
+const adminSockets = new Set();
 
 // ─── NEW: Dedicated Queues for Real-Time Matchmaking ─────────────────────────
 // waitingQueue: players waiting to be matched for the FIRST time in a round
@@ -81,30 +142,63 @@ const playersInMatch = new Set(); // deviceIds of players currently in a match
 const matchTimers = new Map();
 
 // ─── Tournament Pacing Settings ──────────────────────────────────────────────
-// Adjust these to control how fast the tournament runs
+// Adjust these to control how fast the tournament runs.
+// POST_MATCH_DELAY is the pause between "last match in a round ended" and
+// "next round pairs". Kept short so the bracket flies once every match is done.
 const TOURNAMENT_PACING = {
-  QUESTION_TIME_SECONDS: 15,       // Seconds per question (10 = fast, 15-20 = relaxed)
-  PRE_MATCH_COUNTDOWN: 5,          // Seconds countdown before match starts
-  BETWEEN_ROUNDS_DELAY: 3,         // Seconds delay after round result before next question
-  POST_MATCH_DELAY: 5,             // Seconds before winners get paired for next match
+  QUESTION_TIME_SECONDS: 10,       // Seconds per question
+  PRE_MATCH_COUNTDOWN: 3,          // Seconds shown before each match starts
+  BETWEEN_ROUNDS_DELAY: 2,         // Seconds shown after a round_result before next question
+  POST_MATCH_DELAY: 1,             // Seconds between last match of a round ending and next round pairing
+  DISCONNECT_GRACE_SECONDS: 25,    // How long a disconnected player has to reconnect before forfeit
 };
 
 // ─── Tournament Registration System ──────────────────────────────────────────
-// Players enter username before tournament, wait until admin starts, then all play
+// Players enter username before tournament. Auto-start when MAX_TOURNAMENT_PLAYERS
+// is reached, or admin can force-start with any count ≥ 2.
+const MAX_TOURNAMENT_PLAYERS = 400;
 const registeredPlayers = new Map(); // deviceId → { username, deviceId, joinedAt, socketId }
 let tournamentConfig = {
   scheduledDate: null,            // ISO string — when set, registration mode is active
   tournamentStarted: false,       // Has the admin started the tournament?
+  maxPlayers: MAX_TOURNAMENT_PLAYERS,
+  rewardAmount: '',               // Admin-configured display string e.g. "₦20,000"
+  tournamentId: null,             // Stable id used to scope WinnerSubmission docs
 };
+
+// Compute a human round name from the player count entering that round.
+function roundNameForCount(count) {
+  if (count <= 1) return 'Champion';
+  if (count === 2) return 'Final';
+  if (count === 4) return 'Semi Final';
+  if (count === 8) return 'Quarter Final';
+  return null; // null → caller uses `Round N`
+}
+function roundLabel(roundNumber, playersEntering) {
+  return roundNameForCount(playersEntering) || `Round ${roundNumber}`;
+}
+
+// Largest power of 2 ≤ n. Used to trim a registered roster down to a clean
+// bracket so every round is a perfect pair (2, 4, 8, 16, 32, 64, 128, 256...).
+function largestPowerOfTwo(n) {
+  if (n < 2) return 0;
+  return 1 << Math.floor(Math.log2(n));
+}
 
 // Elimination bracket: tracks winners waiting for next round pairing
 // round → [ { deviceId, username, socketId, wins } ]
 const bracketWinners = new Map();
 let currentRound = 1;
 
-// Registration mode is ON only when admin has set a scheduled date
+// Registration is open whenever the tournament hasn't started yet.
+// Players are added to registeredPlayers by /api/users when forTournament=true.
 function isRegistrationMode() {
-  return tournamentConfig.scheduledDate !== null && !tournamentConfig.tournamentStarted;
+  return !tournamentConfig.tournamentStarted;
+}
+
+// Whether MongoDB is connected and usable
+function mongoUp() {
+  return mongoose.connection && mongoose.connection.readyState === 1;
 }
 
 function canStartPlaying() {
@@ -151,11 +245,13 @@ function shuffleArray(arr) {
   return arr;
 }
 
-// Pair a list of players into Bible quiz matches for the current round.
+// Pair a list of players into matches for the current round.
 // Returns the list of match descriptors created.
 function pairPlayersForRound(players, round, questionsPerMatch = 5) {
   shuffleArray(players);
   const matchPairs = [];
+  const playersEntering = players.length;
+  const label = roundLabel(round, playersEntering);
 
   for (let i = 0; i < players.length - 1; i += 2) {
     const p1 = players[i];
@@ -180,49 +276,51 @@ function pairPlayersForRound(players, round, questionsPerMatch = 5) {
     const match = createMatch(
       { deviceId: p1.deviceId, username: p1.username, socketId: p1.socketId },
       { deviceId: p2.deviceId, username: p2.username, socketId: p2.socketId },
-      true, // always Bible quiz for tournament
       questionsPerMatch
     );
     // Tag the match with round info so evaluateRound can trigger next-round logic
     match.tournamentRound = round;
+    match.roundLabel = label;
 
     matchPairs.push({
       matchId: match.matchId,
       round,
+      roundLabel: label,
       p1: { username: p1.username, deviceId: p1.deviceId },
       p2: { username: p2.username, deviceId: p2.deviceId },
     });
 
     const s1 = io.sockets.sockets.get(p1.socketId);
     const s2 = io.sockets.sockets.get(p2.socketId);
-    
+
     // Build match payload for each player - include their own info AND opponent info
-    const basePayload = { 
-      matchId: match.matchId, 
-      matchSeed: match.seed, 
-      questions: match.questions,
+    const basePayload = {
+      matchId: match.matchId,
+      matchSeed: match.seed,
+      questionIds: (match.questions || []).map(q => q.id),
       round,
+      roundLabel: label,
       totalQuestions: match.questions?.length || questionsPerMatch,
       isTournament: true,
       preMatchCountdown: TOURNAMENT_PACING.PRE_MATCH_COUNTDOWN, // Tell clients to show countdown
       questionTime: TOURNAMENT_PACING.QUESTION_TIME_SECONDS,
     };
 
-    if (s1) { 
-      s1.join(match.matchId); 
-      s1.emit('match_found', { 
-        ...basePayload, 
+    if (s1) {
+      s1.join(match.matchId);
+      s1.emit('match_found', {
+        ...basePayload,
         you: { username: p1.username, deviceId: p1.deviceId },
-        opponent: { username: p2.username, deviceId: p2.deviceId } 
-      }); 
+        opponent: { username: p2.username, deviceId: p2.deviceId },
+      });
     }
-    if (s2) { 
-      s2.join(match.matchId); 
-      s2.emit('match_found', { 
-        ...basePayload, 
+    if (s2) {
+      s2.join(match.matchId);
+      s2.emit('match_found', {
+        ...basePayload,
         you: { username: p2.username, deviceId: p2.deviceId },
-        opponent: { username: p1.username, deviceId: p1.deviceId } 
-      }); 
+        opponent: { username: p1.username, deviceId: p1.deviceId },
+      });
     }
 
     // Start server-driven timer AFTER pre-match countdown
@@ -232,69 +330,84 @@ function pairPlayersForRound(players, round, questionsPerMatch = 5) {
       }
     }, TOURNAMENT_PACING.PRE_MATCH_COUNTDOWN * 1000);
 
-    console.log(`[tournament R${round}] Paired: ${p1.username} vs ${p2.username} → ${match.matchId} (${questionsPerMatch} questions, ${TOURNAMENT_PACING.PRE_MATCH_COUNTDOWN}s countdown)`);
+    console.log(`[tournament ${label}] Paired: ${p1.username} vs ${p2.username} → ${match.matchId} (${questionsPerMatch} questions)`);
   }
 
   // Odd player out → automatic bye (advances to next round)
   if (players.length % 2 !== 0) {
     const byePlayer = players[players.length - 1];
     const s = io.sockets.sockets.get(byePlayer.socketId);
-    if (s) s.emit('tournament_bye', { message: 'You got a bye this round! You advance automatically.', username: byePlayer.username, round });
+    if (s) s.emit('tournament_bye', { message: `You got a bye this ${label}! You advance automatically.`, username: byePlayer.username, round, roundLabel: label });
 
-    // Immediately queue bye player as a winner for the next round
-    queueWinnerForNextRound(byePlayer, round);
-    console.log(`[tournament R${round}] Bye: ${byePlayer.username}`);
+    // Bye player advances with infinite duration so they sort behind real wins
+    // if the next round ends up odd.
+    queueWinnerForNextRound({ ...byePlayer, matchDurationMs: Number.MAX_SAFE_INTEGER }, round);
+    console.log(`[tournament ${label}] Bye: ${byePlayer.username}`);
   }
 
-  broadcastToSpectators('round_started', { round, matchCount: matchPairs.length });
-  // Broadcast each match individually so ViewScreen can display them
+  broadcastToSpectators('round_started', { round, roundLabel: label, matchCount: matchPairs.length, playerCount: playersEntering });
+  // Broadcast each match individually so the view screen can display them
   for (const mp of matchPairs) {
     broadcastToSpectators('match_started', {
       matchId: mp.matchId,
       round: mp.round,
+      roundLabel: label,
       p1: mp.p1,
       p2: mp.p2,
     });
   }
-  io.emit('tournament_round_started', { round, matchCount: matchPairs.length, playerCount: players.length });
+  io.emit('tournament_round_started', { round, roundLabel: label, matchCount: matchPairs.length, playerCount: playersEntering });
   return matchPairs;
 }
 
-// Called after a match ends: queue winner into next round bracket
+// Called after a match ends: buffer winner into the round's bracket.
+// Strict round gating: winners wait until EVERY match in this round is finished
+// before any pairing for the next round happens.
 function queueWinnerForNextRound(player, round) {
   if (!bracketWinners.has(round)) bracketWinners.set(round, []);
-  bracketWinners.get(round).push(player);
-
-  // ALSO add to winnersQueue for instant re-matching
-  if (!winnersQueue.has(player.deviceId) && !playersInMatch.has(player.deviceId)) {
-    winnersQueue.set(player.deviceId, {
-      deviceId: player.deviceId,
-      username: player.username,
-      socketId: player.socketId,
-      round: round + 1,
-      queuedAt: Date.now(),
-      wins: player.wins || 1,
-    });
-    console.log(`[winnersQueue] ${player.username} added (${winnersQueue.size} waiting)`);
+  // Avoid duplicate buffering (forfeit + evaluateRound can both fire)
+  const buf = bracketWinners.get(round);
+  if (!buf.some(p => p.deviceId === player.deviceId)) {
+    buf.push(player);
   }
 
-  const waitingWinners = bracketWinners.get(round);
-  console.log(`[bracket R${round}] ${player.username} queued (${waitingWinners.length} waiting)`);
+  console.log(`[bracket R${round}] ${player.username} queued (${buf.length} winners so far)`);
 
-  // Pair winners after POST_MATCH_DELAY so players have time to see the "round won" screen
-  const delayMs = TOURNAMENT_PACING.POST_MATCH_DELAY * 1000;
-  console.log(`[bracket R${round}] Will attempt pairing in ${TOURNAMENT_PACING.POST_MATCH_DELAY}s`);
-  setTimeout(() => {
-    tryPairWinners(round);
-  }, delayMs);
+  // Check if the round is now complete (all matches finished).
+  // If so, schedule the next round's pairing after POST_MATCH_DELAY.
+  maybeAdvanceCompletedRound(round);
 }
 
-// Advance all waiting winners into the next round
-function advanceToNextRound(completedRound) {
-  const nextRound = completedRound + 1;
-  currentRound = nextRound;
+// Round is complete when no active match still carries tournamentRound === round.
+function isRoundComplete(round) {
+  for (const m of matches.values()) {
+    if (m.active && m.tournamentRound === round) return false;
+  }
+  return true;
+}
 
+// Called whenever a match ends. If the round is now complete, schedule the
+// next round's pairing. No-op if more matches are still active.
+function maybeAdvanceCompletedRound(round) {
+  if (!isRoundComplete(round)) {
+    const active = [...matches.values()].filter(m => m.active && m.tournamentRound === round).length;
+    console.log(`[bracket R${round}] Round not yet complete (${active} matches still active)`);
+    return;
+  }
+
+  const delayMs = TOURNAMENT_PACING.POST_MATCH_DELAY * 1000;
+  console.log(`[bracket R${round}] ✅ Round complete — advancing in ${TOURNAMENT_PACING.POST_MATCH_DELAY}s`);
+  setTimeout(() => advanceToNextRound(round), delayMs);
+}
+
+// Advance all waiting winners into the next round (strict gating).
+function advanceToNextRound(completedRound) {
+  // Idempotency: if already advanced, bracketWinners[round] is empty/missing
   const advancingPlayers = bracketWinners.get(completedRound) || [];
+  if (advancingPlayers.length === 0) {
+    console.log(`[tournament] advanceToNextRound(${completedRound}): no winners buffered — nothing to do`);
+    return;
+  }
   bracketWinners.delete(completedRound);
 
   // Filter to only include still-connected players
@@ -304,11 +417,11 @@ function advanceToNextRound(completedRound) {
     return socket && socket.connected;
   });
 
-  console.log(`[tournament] Round ${completedRound} complete — ${advancingPlayers.length} winners, ${connectedAdvancers.length} still connected`);
+  console.log(`[tournament] Round ${completedRound} complete — ${advancingPlayers.length} winners (${connectedAdvancers.length} connected)`);
 
   if (connectedAdvancers.length === 0) {
     console.log(`[tournament] No connected players remain — tournament ends`);
-    io.emit('tournament_ended', { reason: 'All remaining players disconnected' });
+    io.emit('tournament_no_winner', { round: completedRound, message: 'All remaining players disconnected.' });
     return;
   }
 
@@ -317,148 +430,38 @@ function advanceToNextRound(completedRound) {
     return;
   }
 
-  // Calculate questions per match based on remaining player count
-  const questionsPerMatch = getQuestionsPerMatch(connectedAdvancers.length);
-  console.log(`[tournament] Round ${nextRound}: Using ${questionsPerMatch} questions per match for ${connectedAdvancers.length} players`);
-
-  io.emit('tournament_next_round', { round: nextRound, playerCount: connectedAdvancers.length, questionsPerMatch });
-  pairPlayersForRound(connectedAdvancers, nextRound, questionsPerMatch);
-}
-
-// NEW: Try to pair winners INSTANTLY when they become available
-function tryPairWinners(completedRound) {
-  if (matchmakingLock) {
-    console.log(`[tryPairWinners] Matchmaking locked, will retry shortly`);
-    setTimeout(() => tryPairWinners(completedRound), 100);
-    return;
+  // If the count is odd (forfeit, double-disconnect, or stragglers from a
+  // prior bye), drop the SLOWEST winner — they took longest to defeat their
+  // opponent so they don't get the free pass. This guarantees every round
+  // is a perfect pair.
+  if (connectedAdvancers.length % 2 !== 0) {
+    connectedAdvancers.sort((a, b) => (a.matchDurationMs || 0) - (b.matchDurationMs || 0));
+    const dropped = connectedAdvancers.pop();
+    const rp = registeredPlayers.get(dropped.deviceId);
+    if (rp) rp.status = 'not_selected';
+    const s = io.sockets.sockets.get(dropped.socketId);
+    if (s) s.emit('tournament_not_selected', {
+      message: `Round ${completedRound} ended with an odd number of winners. The slowest match win is dropped to keep the bracket clean — that was you this time.`,
+      bracketSize: connectedAdvancers.length,
+    });
+    broadcastToSpectators('player_eliminated', { username: dropped.username });
+    console.log(`[tournament] Odd advance count — dropped slowest winner: ${dropped.username} (${Math.round((dropped.matchDurationMs || 0) / 1000)}s match)`);
   }
 
-  matchmakingLock = true;
   const nextRound = completedRound + 1;
+  currentRound = nextRound;
 
-  try {
-    // Get all connected winners from the winnersQueue
-    const availableWinners = [];
-    for (const [deviceId, player] of winnersQueue) {
-      // Skip if player is already in a match
-      if (playersInMatch.has(deviceId)) {
-        winnersQueue.delete(deviceId);
-        continue;
-      }
-      // Verify socket is still connected
-      const socket = io.sockets.sockets.get(player.socketId);
-      if (socket && socket.connected) {
-        availableWinners.push(player);
-      } else {
-        // Ghost user — remove from queue
-        winnersQueue.delete(deviceId);
-        console.log(`[winnersQueue] Removed ghost: ${player.username}`);
-      }
-    }
+  const questionsPerMatch = getQuestionsPerMatch(connectedAdvancers.length);
+  const label = roundLabel(nextRound, connectedAdvancers.length);
+  console.log(`[tournament] ${label}: ${questionsPerMatch} questions/match for ${connectedAdvancers.length} players`);
 
-    console.log(`[tryPairWinners] ${availableWinners.length} winners available for pairing`);
-
-    // Pair winners in pairs of 2
-    while (availableWinners.length >= 2) {
-      const p1 = availableWinners.shift();
-      const p2 = availableWinners.shift();
-
-      // Remove from winnersQueue ATOMICALLY
-      winnersQueue.delete(p1.deviceId);
-      winnersQueue.delete(p2.deviceId);
-
-      // Also remove from bracketWinners to prevent double-processing
-      const bracket = bracketWinners.get(completedRound) || [];
-      const filteredBracket = bracket.filter(p => p.deviceId !== p1.deviceId && p.deviceId !== p2.deviceId);
-      if (filteredBracket.length > 0) {
-        bracketWinners.set(completedRound, filteredBracket);
-      } else {
-        bracketWinners.delete(completedRound);
-      }
-
-      // Mark as in match
-      playersInMatch.add(p1.deviceId);
-      playersInMatch.add(p2.deviceId);
-
-      // Calculate questions
-      const questionsPerMatch = getQuestionsPerMatch(winnersQueue.size + availableWinners.length + 2);
-
-      // Create match
-      const match = createMatch(
-        { deviceId: p1.deviceId, username: p1.username, socketId: p1.socketId },
-        { deviceId: p2.deviceId, username: p2.username, socketId: p2.socketId },
-        true, // Bible quiz for tournament
-        questionsPerMatch
-      );
-      match.tournamentRound = nextRound;
-
-      // Emit to players
-      const basePayload = {
-        matchId: match.matchId,
-        matchSeed: match.seed,
-        questions: match.questions,
-        round: nextRound,
-        totalQuestions: match.questions?.length || questionsPerMatch,
-        isTournament: true,
-        preMatchCountdown: TOURNAMENT_PACING.PRE_MATCH_COUNTDOWN,
-        questionTime: TOURNAMENT_PACING.QUESTION_TIME_SECONDS,
-      };
-
-      const s1 = io.sockets.sockets.get(p1.socketId);
-      const s2 = io.sockets.sockets.get(p2.socketId);
-
-      if (s1) {
-        s1.join(match.matchId);
-        s1.emit('match_found', {
-          ...basePayload,
-          you: { username: p1.username, deviceId: p1.deviceId },
-          opponent: { username: p2.username, deviceId: p2.deviceId },
-        });
-      }
-      if (s2) {
-        s2.join(match.matchId);
-        s2.emit('match_found', {
-          ...basePayload,
-          you: { username: p2.username, deviceId: p2.deviceId },
-          opponent: { username: p1.username, deviceId: p1.deviceId },
-        });
-      }
-
-      // Start server-driven timer AFTER pre-match countdown
-      setTimeout(() => {
-        if (match.active) {
-          startMatchTimer(match);
-        }
-      }, TOURNAMENT_PACING.PRE_MATCH_COUNTDOWN * 1000);
-
-      console.log(`[instant-winner-pair] R${nextRound}: ${p1.username} vs ${p2.username} → ${match.matchId}`);
-      broadcastToSpectators('match_started', {
-        matchId: match.matchId,
-        round: nextRound,
-        p1: { username: p1.username, deviceId: p1.deviceId },
-        p2: { username: p2.username, deviceId: p2.deviceId },
-      });
-    }
-
-    // Check if only 1 winner remains and no active matches
-    if (availableWinners.length === 1) {
-      const activeMatches = [...matches.values()].filter(m => m.tournamentRound && m.active);
-      
-      if (activeMatches.length === 0) {
-        // This is the champion!
-        const champion = availableWinners[0];
-        winnersQueue.delete(champion.deviceId);
-        const initialPlayerCount = tournamentConfig.initialPlayerCount || registeredPlayers.size;
-        console.log(`[tryPairWinners] Declaring champion: ${champion.username} (completed round ${completedRound}, initial players: ${initialPlayerCount})`);
-        declareTournamentChampion(champion);
-      } else {
-        // Wait for other matches to complete
-        console.log(`[tryPairWinners] 1 winner waiting, ${activeMatches.length} matches still active`);
-      }
-    }
-  } finally {
-    matchmakingLock = false;
-  }
+  io.emit('tournament_next_round', {
+    round: nextRound,
+    roundLabel: label,
+    playerCount: connectedAdvancers.length,
+    questionsPerMatch,
+  });
+  pairPlayersForRound(connectedAdvancers, nextRound, questionsPerMatch);
 }
 
 // NEW: Server-driven match timer
@@ -569,7 +572,6 @@ function tryInstantQueuePair() {
       const match = createMatch(
         { deviceId: p1.deviceId, username: p1.username, socketId: p1.socketId },
         { deviceId: p2.deviceId, username: p2.username, socketId: p2.socketId },
-        true, // Bible quiz
         questionsPerMatch
       );
       match.tournamentRound = 1; // Default to round 1 for queue matches
@@ -577,7 +579,7 @@ function tryInstantQueuePair() {
       const basePayload = {
         matchId: match.matchId,
         matchSeed: match.seed,
-        questions: match.questions,
+        questionIds: (match.questions || []).map(q => q.id),
         round: 1,
         totalQuestions: questionsPerMatch,
         isTournament: true,
@@ -698,11 +700,27 @@ async function declareTournamentChampion(player) {
     registered.status = 'champion';
   }
   
-  io.emit('tournament_champion', { username: player.username, deviceId: player.deviceId });
-  broadcastToSpectators('tournament_champion', { username: player.username });
+  const rewardAmount = tournamentConfig.rewardAmount || '';
+  const tournamentId = tournamentConfig.tournamentId || tournamentConfig.scheduledDate || null;
+
+  io.emit('tournament_champion', {
+    username: player.username,
+    deviceId: player.deviceId,
+    rewardAmount,
+    tournamentId,
+  });
+  broadcastToSpectators('tournament_champion', {
+    username: player.username,
+    rewardAmount,
+  });
 
   const s = io.sockets.sockets.get(player.socketId);
-  if (s) s.emit('you_are_champion', { message: '🏆 Congratulations! You are the Tournament Champion!' });
+  if (s) s.emit('you_are_champion', {
+    message: '🏆 Congratulations! You are the Tournament Champion!',
+    username: player.username,
+    rewardAmount,
+    tournamentId,
+  });
 
   // Update leaderboard
   const lb = leaderboard.get(player.username) || { username: player.username, wins: 0 };
@@ -723,8 +741,10 @@ async function declareTournamentChampion(player) {
 function startTournament() {
   if (tournamentConfig.tournamentStarted) return { error: 'Tournament already started' };
   if (registeredPlayers.size < 2) return { error: 'Need at least 2 registered players' };
+  if (questionBank.length === 0) return { error: 'No questions available. Admin must add questions first.' };
 
   tournamentConfig.tournamentStarted = true;
+  tournamentConfig.tournamentId = tournamentConfig.scheduledDate || ('tournament_' + Date.now());
   currentRound = 1;
   bracketWinners.clear();
 
@@ -760,39 +780,68 @@ function startTournament() {
     return { error: `Only ${connectedPlayers.length} players connected. Need at least 2.` };
   }
 
-  const players = connectedPlayers;
-  
-  // IMPORTANT: Track initial player count for bye/champion logic
+  // Trim down to the largest power of 2 so every round pairs perfectly
+  // (2, 4, 8, 16, 32, 64, 128, 256 ...). Timing-based: the LATEST to
+  // register loses their seat first ("first-come, first-served").
+  // Ties on joinedAt are broken by deviceId for determinism.
+  const targetSize = largestPowerOfTwo(connectedPlayers.length);
+  connectedPlayers.sort((a, b) => {
+    const aT = a.joinedAt || Number.MAX_SAFE_INTEGER;
+    const bT = b.joinedAt || Number.MAX_SAFE_INTEGER;
+    if (aT !== bT) return aT - bT;
+    return String(a.deviceId).localeCompare(String(b.deviceId));
+  });
+  const players = connectedPlayers.slice(0, targetSize);
+  const trimmed = connectedPlayers.slice(targetSize);
+
+  if (trimmed.length > 0) {
+    console.log(`[tournament] Trimmed ${trimmed.length} players to keep the bracket a power of 2 (${connectedPlayers.length} → ${targetSize})`);
+    for (const p of trimmed) {
+      // Mark them as not-selected; they stay in registeredPlayers but won't be paired.
+      const rp = registeredPlayers.get(p.deviceId);
+      if (rp) rp.status = 'not_selected';
+      const s = io.sockets.sockets.get(p.socketId);
+      if (s) s.emit('tournament_not_selected', {
+        message: `The bracket is capped at ${targetSize} for a clean elimination. Seats go to the first ${targetSize} who registered — you joined later this time. Try the next tournament.`,
+        bracketSize: targetSize,
+      });
+    }
+  }
+
+  // Track initial player count for bye/champion logic
   tournamentConfig.initialPlayerCount = players.length;
-  
-  // Calculate questions per match based on player count
-  const questionsPerMatch = getQuestionsPerMatch(connectedPlayers.length);
-  console.log(`[tournament] Using ${questionsPerMatch} questions per match for ${connectedPlayers.length} players`);
-  
-  // Broadcast tournament start with Bible questions bank to all clients
-  // Each paired match will get specific questions, but clients need the full bank for display
+
+  const questionsPerMatch = getQuestionsPerMatch(players.length);
+  const label = roundLabel(1, players.length);
+  console.log(`[tournament] Using ${questionsPerMatch} questions per match for ${players.length} players (clean bracket)`);
+
+  // Broadcast tournament start to all clients
   io.emit('tournament_started', {
     message: 'Tournament is starting!',
-    playerCount: registeredPlayers.size,
+    playerCount: players.length,          // size of the clean bracket
+    registeredCount: registeredPlayers.size,
     round: 1,
-    questionsPerMatch: questionsPerMatch,
-    bibleQuestions: BIBLE_QUESTIONS, // Send full question bank to frontend
+    roundLabel: label,
+    questionsPerMatch,
+    rewardAmount: tournamentConfig.rewardAmount,
+    maxPlayers: tournamentConfig.maxPlayers,
+    tournamentId: tournamentConfig.tournamentId,
   });
 
-  // Now pair all registered players for Round 1
+  // Pair the selected (power-of-2) players for Round 1
   const matchPairs = pairPlayersForRound(players, 1, questionsPerMatch);
 
-  // Notify spectators
   broadcastToSpectators('tournament_started', {
-    playerCount: registeredPlayers.size,
+    playerCount: players.length,
     matchCount: matchPairs.length,
     round: 1,
+    roundLabel: label,
+    rewardAmount: tournamentConfig.rewardAmount,
   });
 
-  console.log(`[tournament] 🎮 Started with ${registeredPlayers.size} players, ${matchPairs.length} Round-1 matches`);
-  console.log(`[tournament] 📚 Sent ${BIBLE_QUESTIONS.length} Bible questions to all clients`);
-  
-  return { ok: true, playerCount: registeredPlayers.size, matches: matchPairs, round: 1 };
+  console.log(`[tournament] 🎮 Started with ${players.length}/${registeredPlayers.size} players (clean bracket), ${matchPairs.length} ${label} matches`);
+
+  return { ok: true, playerCount: players.length, matches: matchPairs, round: 1, roundLabel: label };
 }
 
 // Schedule auto-start timer for a tournament
@@ -1033,7 +1082,7 @@ function pruneLobby() {
 }
 
 // Instantly try to pair a player with anyone waiting in the lobby
-function tryInstantPair(deviceId, username, socketId, isSpecialSession = false) {
+function tryInstantPair(deviceId, username, socketId) {
   // Find any other real player waiting
   let paired = null;
   for (const [id, entry] of lobby) {
@@ -1041,15 +1090,14 @@ function tryInstantPair(deviceId, username, socketId, isSpecialSession = false) 
     paired = entry;
     break;
   }
-  
+
   if (paired) {
     lobby.delete(paired.deviceId);
     lobby.delete(deviceId);
-    
+
     const p1 = { deviceId: paired.deviceId, username: paired.username, socketId: paired.socketId };
     const p2 = { deviceId, username, socketId };
-    const isBibleQuiz = isSpecialSession || paired.isSpecialSession;
-    const match = createMatch(p1, p2, isBibleQuiz);
+    const match = createMatch(p1, p2);
     
     const socket = io.sockets.sockets.get(socketId);
     if (socket) socket.join(match.matchId);
@@ -1061,7 +1109,7 @@ function tryInstantPair(deviceId, username, socketId, isSpecialSession = false) 
       return {
         matchId: match.matchId,
         seed: match.seed,
-        questions: match.questions,
+        questionIds: (match.questions || []).map(q => q.id),
         opponent: { username: opp.username, deviceId: opp.deviceId },
       };
     };
@@ -1151,24 +1199,19 @@ function getQuestionsPerMatch(playerCount) {
   return 3;                              // 6+ rounds → 3 questions per match (faster games)
 }
 
-function createMatch(p1, p2, isSpecialSession = false, questionsCount = 5) {
+function createMatch(p1, p2, questionsCount = 5) {
   const matchId = 'match_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6);
   const seed    = matchId;
 
-  // Pick questions from the right bank
-  // Bible quiz (special session) uses Bible questions, normal matches use frontend seeded questions
-  let bank = isSpecialSession && BIBLE_QUESTIONS.length > 0
-    ? BIBLE_QUESTIONS
-    : null;                 // normal: frontend picks from its own QUESTIONS_DB using the seed
-
+  // Tournament/server-authoritative matches pull from the runtime questionBank.
+  // If empty, questions stays null and the client must provide its own seeded questions
+  // (used by the casual 1v1 lobby flow).
   let questions = null;
-  if (bank) {
-    // Repeat pool if fewer than needed
-    let pool = bank;
-    while (pool.length < questionsCount) pool = [...pool, ...bank];
+  if (questionBank.length > 0) {
+    let pool = questionBank;
+    while (pool.length < questionsCount) pool = [...pool, ...questionBank];
     questions = seededShuffle(pool, seed).slice(0, questionsCount);
   }
-  // If bank is null, frontend uses getSeededQuestions(questionsCount, [], seed) — same seed = same questions
 
   const match = {
     matchId,
@@ -1221,7 +1264,7 @@ io.on('connection', (socket) => {
           match.players[deviceId].disconnectedAt = Date.now();
           socket.to(matchId).emit('opponent_disconnected', { matchId });
           
-          // Give them 15s to reconnect before forfeiting (reduced from 30s for faster games)
+          // Reconnect grace period; if they don't come back, the opponent wins by forfeit.
           setTimeout(() => {
             const m = matches.get(matchId);
             if (m && m.active && !m.players[deviceId]?.connected) {
@@ -1256,8 +1299,16 @@ io.on('connection', (socket) => {
                     wp.wins = (wp.wins || 0) + 1;
                     wp.round = round + 1;
                   }
+                  // Forfeits get a high duration so they sort behind real wins
+                  // when an odd round needs trimming.
                   queueWinnerForNextRound(
-                    { deviceId: opponent.deviceId, username: opponent.username, socketId: opponent.socketId, wins: (wp?.wins || 1) },
+                    {
+                      deviceId: opponent.deviceId,
+                      username: opponent.username,
+                      socketId: opponent.socketId,
+                      wins: (wp?.wins || 1),
+                      matchDurationMs: Number.MAX_SAFE_INTEGER,
+                    },
                     round
                   );
                 }
@@ -1304,7 +1355,7 @@ io.on('connection', (socket) => {
               m.active = false;
               matches.delete(matchId);
             }
-          }, 15000);
+          }, TOURNAMENT_PACING.DISCONNECT_GRACE_SECONDS * 1000);
         }
       }
     }
@@ -1375,10 +1426,10 @@ io.on('connection', (socket) => {
         socket.emit('match_reconnected', {
           matchId,
           matchSeed: match.seed,
-          questions: match.questions,
+          questionIds: (match.questions || []).map(q => q.id),
           questionIndex: match.questionIndex,
           totalQuestions: match.questions?.length || 5,
-          currentQuestion: match.questions?.[match.questionIndex] || null,
+          currentQuestionId: match.questions?.[match.questionIndex]?.id || null,
           round: match.tournamentRound || 1,
           opponent: opponent ? { username: opponent.username, deviceId: opponent.deviceId } : null,
           myAnswer: player.answer,
@@ -1463,7 +1514,7 @@ io.on('connection', (socket) => {
   });
 
   // ── Player joins the matchmaking lobby ──────────────────────────────────
-  socket.on('join_lobby', ({ deviceId, username, sessionToken, isSpecialSession }) => {
+  socket.on('join_lobby', ({ deviceId, username, sessionToken, isTournament }) => {
     if (isRateLimited(socket.id, 'join_lobby', 3, 10000)) {
       return recordViolation(socket, 'Rate limit: join_lobby');
     }
@@ -1551,80 +1602,60 @@ io.on('connection', (socket) => {
 
     pruneLobby();
 
-    // Tournament mode: only active when admin has set a scheduled date
-    if (isRegistrationMode()) {
-      // If player already registered via REST, just update their socketId
-      if (registeredPlayers.has(deviceId)) {
-        const rp = registeredPlayers.get(deviceId);
-        rp.socketId = socket.id;
-        
-        const activeCount = getActivePlayerCount();
-        socket.emit('tournament_waiting', {
-          message: 'You are registered! Waiting for tournament to start...',
-          waitingCount: registeredPlayers.size,
-          activeCount: activeCount,
-          scheduledDate: tournamentConfig.scheduledDate,
-        });
-        
-        // Broadcast updated active count to all clients
-        io.emit('active_count', { count: activeCount, registered: registeredPlayers.size });
-        
-        console.log(`[tournament] ${username} reconnected socket (${registeredPlayers.size} registered, ${activeCount} active)`);
+    // ── Tournament waiting path ──
+    // A player belongs to the tournament if they are already registered
+    // (added via /api/users with forTournament=true), or they explicitly
+    // pass isTournament:true on this join. Casual players bypass this branch.
+    if (isTournament || registeredPlayers.has(deviceId)) {
+      // Refuse if tournament not in a registration state
+      if (tournamentConfig.tournamentStarted) {
+        socket.emit('tournament_in_progress', { message: 'Tournament is already in progress.' });
         return;
       }
 
-      // Otherwise check if user exists in DB — they must register via REST API first
-      (async () => {
-        try {
-          // Check if user already exists in DB by deviceId
-          let existingUser = await User.findOne({ deviceId });
-          
-          if (existingUser) {
-            // User already exists — register in-memory and let them join
-            registeredPlayers.set(deviceId, {
-              username: existingUser.username,
-              deviceId,
-              joinedAt: Date.now(),
-              socketId: socket.id,
-              wins: 0,
-              round: 1,
-              status: 'waiting',
-            });
-            
-            if (!leaderboard.has(existingUser.username)) {
-              leaderboard.set(existingUser.username, { username: existingUser.username, wins: 0, stage: 'waiting' });
-            }
-            
-            const activeCount = getActivePlayerCount();
-            socket.emit('tournament_waiting', {
-              message: 'You are registered! Waiting for tournament to start...',
-              waitingCount: registeredPlayers.size,
-              activeCount: activeCount,
-              scheduledDate: tournamentConfig.scheduledDate,
-            });
-            
-            broadcastToSpectators('player_joined', { username: existingUser.username, waitingCount: registeredPlayers.size, activeCount });
-            io.emit('waiting_count', { count: registeredPlayers.size });
-            io.emit('active_count', { count: activeCount, registered: registeredPlayers.size });
-            
-            console.log(`[tournament] ${existingUser.username} logged in via socket (${registeredPlayers.size} registered, ${activeCount} active)`);
-          } else {
-            // User not found — tell them to register first
-            socket.emit('registration_error', { 
-              error: 'You need to register first. Please enter your username to join.',
-              code: 'NOT_REGISTERED'
-            });
-            console.log(`[tournament] ${username} (${deviceId}) not registered — rejected`);
-          }
-        } catch (err) {
-          console.error(`[tournament] DB error checking ${username}:`, err.message);
-          socket.emit('registration_error', { 
-            error: 'Connection error. Please try again.',
-            code: 'DB_ERROR'
+      // Auto-register on socket if explicit flag (so the player doesn't need a separate REST call)
+      if (!registeredPlayers.has(deviceId)) {
+        if (registeredPlayers.size >= tournamentConfig.maxPlayers) {
+          socket.emit('registration_error', {
+            error: `Tournament is full (${tournamentConfig.maxPlayers}/${tournamentConfig.maxPlayers}).`,
+            code: 'TOURNAMENT_FULL',
           });
+          return;
         }
-      })();
-      
+        registeredPlayers.set(deviceId, {
+          username, deviceId, joinedAt: Date.now(),
+          socketId: socket.id, wins: 0, round: 1, status: 'waiting',
+        });
+        if (!leaderboard.has(username)) {
+          leaderboard.set(username, { username, wins: 0, stage: 'waiting' });
+        }
+        broadcastToSpectators('player_joined', { username, waitingCount: registeredPlayers.size });
+      } else {
+        // Reattach socketId for already-registered players
+        const rp = registeredPlayers.get(deviceId);
+        rp.socketId = socket.id;
+      }
+
+      const activeCount = getActivePlayerCount();
+      socket.emit('tournament_waiting', {
+        message: 'You are registered! Waiting for tournament to start...',
+        waitingCount: registeredPlayers.size,
+        activeCount,
+        max: tournamentConfig.maxPlayers,
+        rewardAmount: tournamentConfig.rewardAmount,
+        scheduledDate: tournamentConfig.scheduledDate,
+      });
+      io.emit('waiting_count', { count: registeredPlayers.size, max: tournamentConfig.maxPlayers });
+      io.emit('active_count', { count: activeCount, registered: registeredPlayers.size });
+
+      console.log(`[tournament] ${username} waiting (${registeredPlayers.size}/${tournamentConfig.maxPlayers}, ${activeCount} active)`);
+
+      // Auto-start the moment we hit the cap
+      if (registeredPlayers.size >= tournamentConfig.maxPlayers) {
+        console.log(`[tournament] 🚀 Reached max — auto-starting`);
+        io.emit('tournament_countdown', { secondsRemaining: 0, message: 'Tournament starting NOW!' });
+        setImmediate(() => attemptTournamentStart());
+      }
       return;
     }
 
@@ -1648,7 +1679,7 @@ io.on('connection', (socket) => {
         socket.emit('match_rejoin', {
           matchId: match.matchId,
           seed: match.seed,
-          questions: match.questions,
+          questionIds: (match.questions || []).map(q => q.id),
           questionIndex: match.questionIndex,
           opponent: { username: opponent?.username, deviceId: opponent?.deviceId },
         });
@@ -1670,22 +1701,9 @@ io.on('connection', (socket) => {
     }
 
     if (paired) {
-      // Bible quiz: wait until lobby has 10 players before pairing
-      const isBibleQuiz = isSpecialSession || paired.isSpecialSession;
-      if (isBibleQuiz && lobby.size + 1 < SPECIAL_LOBBY_REQUIRED) {
-        // Not enough players yet — put current player in lobby too and wait
-        lobby.set(deviceId, { socketId: socket.id, username, deviceId, joinedAt: Date.now(), isSpecialSession });
-        // Put paired back too
-        lobby.set(paired.deviceId, { socketId: paired.socketId, username: paired.username, deviceId: paired.deviceId, joinedAt: paired.joinedAt, isSpecialSession: paired.isSpecialSession });
-        socket.emit('waiting_for_opponent');
-        io.emit('lobby_count', { count: lobby.size });
-        console.log(`[lobby bible] ${username} waiting — ${lobby.size}/${SPECIAL_LOBBY_REQUIRED} players`);
-        return;
-      }
-
       const p1 = { deviceId: paired.deviceId, username: paired.username, socketId: paired.socketId };
       const p2 = { deviceId, username, socketId: socket.id };
-      const match = createMatch(p1, p2, isBibleQuiz);
+      const match = createMatch(p1, p2);
 
       socket.join(match.matchId);
       const p1Socket = io.sockets.sockets.get(paired.socketId);
@@ -1696,7 +1714,7 @@ io.on('connection', (socket) => {
         return {
           matchId: match.matchId,
           seed: match.seed,
-          questions: match.questions,
+          questionIds: (match.questions || []).map(q => q.id),
           opponent: { username: opp.username, deviceId: opp.deviceId },
         };
       };
@@ -1720,7 +1738,7 @@ io.on('connection', (socket) => {
       });
       broadcastLobbyCount();
     } else {
-      lobby.set(deviceId, { socketId: socket.id, username, deviceId, joinedAt: Date.now(), isSpecialSession });
+      lobby.set(deviceId, { socketId: socket.id, username, deviceId, joinedAt: Date.now() });
       socket.emit('waiting_for_opponent');
       io.emit('lobby_count', { count: lobby.size });
       console.log(`[lobby] ${username} (${deviceId}) waiting…`);
@@ -1832,13 +1850,32 @@ io.on('connection', (socket) => {
     recordViolation(socket, `client_report: ${type}`);
   });
 
-  // ── Admin: push special session ────────────────────────────────────────
-  socket.on('admin_set_special_session', (ss) => {
-    specialSession = ss;
-    io.emit('special_session_updated', ss);
-    console.log(`[admin] special session ${ss.active ? 'ACTIVATED' : 'deactivated'} (${ss.questions?.length || 0} questions)`);
+  // ── Admin live channel (real-time winner-submission notifications) ─────
+  socket.on('admin_join', ({ token }) => {
+    if (!token) return;
+    try {
+      jwt.verify(token, process.env.JWT_SECRET || 'dev-secret');
+      adminSockets.add(socket.id);
+      socket.emit('admin_joined', { ok: true });
+      console.log(`[admin-socket] ${socket.id} joined admin channel`);
+    } catch (_) {
+      socket.emit('admin_joined', { ok: false, error: 'Invalid token' });
+    }
+  });
+
+  // Update adminSockets cleanup on disconnect — handled below in the existing
+  // disconnect handler via the wrapping cleanup pattern.
+  socket.on('disconnect', () => {
+    adminSockets.delete(socket.id);
   });
 });
+
+function broadcastToAdmins(event, data) {
+  for (const sid of adminSockets) {
+    const s = io.sockets.sockets.get(sid);
+    if (s) s.emit(event, data);
+  }
+}
 
 // ─── Round evaluation (server-authoritative) ──────────────────────────────────
 function evaluateRound(match, io) {
@@ -1895,7 +1932,7 @@ function evaluateRound(match, io) {
     if (match.questionIndex >= match.questions.length - 1) {
       // Need more questions — fetch additional ones from the bank
       const usedIds = new Set(match.questions.map(q => q.id));
-      const availableQuestions = BIBLE_QUESTIONS.filter(q => !usedIds.has(q.id));
+      const availableQuestions = questionBank.filter(q => !usedIds.has(q.id));
       
       if (availableQuestions.length > 0) {
         // Add 5 more questions (or however many are available)
@@ -1905,7 +1942,7 @@ function evaluateRound(match, io) {
         console.log(`[match] ${match.matchId} both correct ${match.bothCorrectCount}x — added ${newQuestions.length} more questions`);
       } else {
         // Truly exhausted all questions — use speed tiebreak as last resort
-        console.log(`[match] ${match.matchId} exhausted all ${BIBLE_QUESTIONS.length} questions — speed tiebreak`);
+        console.log(`[match] ${match.matchId} exhausted all ${questionBank.length} questions — speed tiebreak`);
         p1Result = p1.answerTime <= p2.answerTime ? 'win' : 'lose';
         p2Result = p1Result === 'win' ? 'lose' : 'win';
         matchOver = true;
@@ -1930,7 +1967,7 @@ function evaluateRound(match, io) {
       const nextQuestion = match.questions[match.questionIndex];
       const nextQuestionPayload = {
         questionIndex: match.questionIndex,
-        question: nextQuestion,
+        questionId: nextQuestion.id,
         bothCorrectCount: match.bothCorrectCount,
         totalQuestions: match.questions.length,
         message: 'Both correct! Here\'s another question.',
@@ -1966,7 +2003,7 @@ function evaluateRound(match, io) {
       // Check if we've exhausted all questions in current set
       if (match.questionIndex >= match.questions.length - 1) {
         const usedIds = new Set(match.questions.map(q => q.id));
-        const availableQuestions = BIBLE_QUESTIONS.filter(q => !usedIds.has(q.id));
+        const availableQuestions = questionBank.filter(q => !usedIds.has(q.id));
         
         if (availableQuestions.length > 0) {
           const newQuestions = seededShuffle(availableQuestions, match.matchId + '_bw_' + match.bothWrongCount)
@@ -1975,7 +2012,7 @@ function evaluateRound(match, io) {
           console.log(`[match] ${match.matchId} both wrong ${match.bothWrongCount}x — added ${newQuestions.length} more questions`);
         } else {
           // Truly exhausted all questions — eliminate both as absolute last resort
-          console.log(`[match] ${match.matchId} exhausted all ${BIBLE_QUESTIONS.length} questions — eliminating both`);
+          console.log(`[match] ${match.matchId} exhausted all ${questionBank.length} questions — eliminating both`);
           p1Result = 'gameover'; p2Result = 'gameover'; matchOver = true;
         }
       }
@@ -2003,7 +2040,7 @@ function evaluateRound(match, io) {
         const nextQuestion = match.questions[match.questionIndex];
         const nextQuestionPayload = {
           questionIndex: match.questionIndex,
-          question: nextQuestion,
+          questionId: nextQuestion.id,
           bothWrongCount: match.bothWrongCount,
           totalQuestions: match.questions.length,
           message: 'Both wrong! Try another question.',
@@ -2174,9 +2211,18 @@ function evaluateRound(match, io) {
           });
         }
 
-        // Queue winner for next round (triggers pairing after POST_MATCH_DELAY)
+        // Queue winner for next round. Carry the match duration so that, if
+        // the next round has an odd count (e.g. a forfeit), the SLOWEST
+        // winner is the one dropped rather than a random pick.
+        const matchDurationMs = match.startTime ? Date.now() - match.startTime : Number.MAX_SAFE_INTEGER;
         queueWinnerForNextRound(
-          { deviceId: winner.deviceId, username: winner.username, socketId: winner.socketId, wins: (wp?.wins || 1) },
+          {
+            deviceId: winner.deviceId,
+            username: winner.username,
+            socketId: winner.socketId,
+            wins: (wp?.wins || 1),
+            matchDurationMs,
+          },
           round
         );
       } else {
@@ -2240,68 +2286,105 @@ app.post('/api/users', async (req, res) => {
       return res.status(400).json({ error: 'This username is not allowed' });
     }
 
-    // Check if device already registered
-    const existingUserByDevice = await User.findOne({ deviceId });
-    if (existingUserByDevice) {
-      return res.status(200).json({ 
-        ok: true, 
-        alreadyExists: true, 
-        message: "You're already in!", 
-        user: existingUserByDevice 
+    const forTournament = !!req.body.forTournament;
+    const hasMongo = mongoUp();
+
+    // Hard block: tournament already running → no new joiners.
+    // (Existing registered players reconnecting hit the socket path, not this.)
+    if (forTournament && tournamentConfig.tournamentStarted) {
+      return res.status(409).json({
+        error: 'Tournament is already in progress. Please wait for the next one.',
+        code: 'TOURNAMENT_IN_PROGRESS',
       });
     }
 
-    // Check if username is already taken (case-insensitive due to lowercase normalization)
-    const existingUserByUsername = await User.findOne({ username });
-    if (existingUserByUsername) {
-      return res.status(409).json({ error: 'Username is already taken. Please choose another.' });
+    // ── Username/device uniqueness checks ──
+    let existingUser = null;
+    if (hasMongo) {
+      existingUser = await User.findOne({ deviceId });
+      if (!existingUser) {
+        const takenByName = await User.findOne({ username });
+        if (takenByName) {
+          return res.status(409).json({ error: 'Username is already taken. Please choose another.' });
+        }
+      }
+    } else {
+      // In-memory fallback when Mongo is down: check across known registeredPlayers + lobby + leaderboard
+      for (const p of registeredPlayers.values()) {
+        if (p.deviceId === deviceId) { existingUser = { username: p.username, deviceId }; break; }
+        if (p.username === username) {
+          return res.status(409).json({ error: 'Username is already taken. Please choose another.' });
+        }
+      }
     }
 
-    // Create new user
-    const user = await User.create({ username, deviceId });
+    // Create user record (Mongo) — skipped without Mongo
+    let user = existingUser;
+    if (!existingUser && hasMongo) {
+      user = await User.create({ username, deviceId });
+    } else if (!existingUser) {
+      user = { username, deviceId, _ephemeral: true };
+    }
 
-    // If registration is open, also register into current tournament
-    if (isRegistrationMode()) {
-      if (registeredPlayers.has(deviceId)) {
-        return res.status(409).json({ error: 'Already registered for this tournament' });
+    // ── Tournament registration (only when caller asked for it) ──
+    if (forTournament && !tournamentConfig.tournamentStarted) {
+      if (!registeredPlayers.has(deviceId)) {
+        if (registeredPlayers.size >= tournamentConfig.maxPlayers) {
+          return res.status(409).json({
+            error: `Tournament is full (${tournamentConfig.maxPlayers}/${tournamentConfig.maxPlayers}). Please wait for the next one.`,
+            code: 'TOURNAMENT_FULL',
+          });
+        }
+
+        if (hasMongo && tournamentConfig.scheduledDate) {
+          await TournamentPlayer.findOneAndUpdate(
+            { deviceId, tournamentId: tournamentConfig.scheduledDate },
+            { username, deviceId, tournamentId: tournamentConfig.scheduledDate, status: 'waiting', wins: 0, round: 1 },
+            { upsert: true, returnDocument: 'after', runValidators: true }
+          ).catch(e => console.error('[api/users] TournamentPlayer upsert error:', e.message));
+        }
+
+        registeredPlayers.set(deviceId, {
+          username, deviceId, joinedAt: Date.now(),
+          socketId: null, wins: 0, round: 1, status: 'waiting',
+        });
+
+        if (!leaderboard.has(username)) {
+          leaderboard.set(username, { username, wins: 0, stage: 'waiting' });
+        }
+
+        broadcastToSpectators('player_joined', { username, waitingCount: registeredPlayers.size });
+        io.emit('waiting_count', { count: registeredPlayers.size, max: tournamentConfig.maxPlayers });
+
+        console.log(`[tournament] ${username} registered via REST (${registeredPlayers.size}/${tournamentConfig.maxPlayers})`);
+
+        if (registeredPlayers.size >= tournamentConfig.maxPlayers) {
+          console.log(`[tournament] 🚀 Reached max ${tournamentConfig.maxPlayers} — auto-starting`);
+          io.emit('tournament_countdown', { secondsRemaining: 0, message: 'Tournament starting NOW!' });
+          setImmediate(() => attemptTournamentStart());
+        }
       }
 
-      // Save to MongoDB tournament players collection
-      await TournamentPlayer.findOneAndUpdate(
-        { deviceId, tournamentId: tournamentConfig.scheduledDate },
-        { username, deviceId, tournamentId: tournamentConfig.scheduledDate, status: 'waiting', wins: 0, round: 1 },
-        { upsert: true, returnDocument: 'after', runValidators: true }
-      );
-
-      // Register in-memory
-      registeredPlayers.set(deviceId, {
-        username,
-        deviceId,
-        joinedAt: Date.now(),
-        socketId: null, // will be set when socket connects
-        wins: 0,
-        round: 1,
-        status: 'waiting',
-      });
-
-      if (!leaderboard.has(username)) {
-        leaderboard.set(username, { username, wins: 0, stage: 'waiting' });
-      }
-
-      broadcastToSpectators('player_joined', { username, lobbyCount: registeredPlayers.size, waitingCount: registeredPlayers.size });
-      io.emit('waiting_count', { count: registeredPlayers.size });
-
-      console.log(`[tournament] ${username} registered via REST (${registeredPlayers.size} total)`);
-      return res.status(201).json({
+      return res.status(200).json({
         ok: true,
         registered: true,
+        alreadyExists: !!existingUser,
         waitingCount: registeredPlayers.size,
+        max: tournamentConfig.maxPlayers,
+        rewardAmount: tournamentConfig.rewardAmount,
         scheduledDate: tournamentConfig.scheduledDate,
-        message: 'Registered! Waiting for tournament to start.',
+        user: { username, deviceId },
+        message: existingUser ? "You're already in!" : 'Registered! Waiting for tournament to start.',
       });
     }
 
-    res.status(201).json({ ok: true, registered: false, message: 'User saved. No active tournament registration.' });
+    return res.status(existingUser ? 200 : 201).json({
+      ok: true,
+      registered: false,
+      alreadyExists: !!existingUser,
+      user: { username: user.username, deviceId: user.deviceId },
+      message: existingUser ? "You're already in!" : 'User saved.',
+    });
   } catch (err) {
     console.error('[api/users] Error:', err.message);
     res.status(500).json({ error: 'Server error' });
@@ -2311,12 +2394,17 @@ app.post('/api/users', async (req, res) => {
 // Get all players
 app.get('/api/users', async (req, res) => {
   try {
-    const users = await User.find({}, { username: 1, deviceId: 1, createdAt: 1, _id: 0 })
-      .sort({ createdAt: -1 });
+    if (mongoUp()) {
+      const users = await User.find({}, { username: 1, deviceId: 1, createdAt: 1, _id: 0 })
+        .sort({ createdAt: -1 });
+      return res.json({ ok: true, count: users.length, users });
+    }
+    // No Mongo: return current in-memory tournament + leaderboard players
+    const users = [...registeredPlayers.values()].map(p => ({ username: p.username, deviceId: p.deviceId }));
     res.json({ ok: true, count: users.length, users });
   } catch (err) {
     console.error('[api/users] GET all error:', err.message);
-    res.status(500).json({ error: 'Server error' });
+    res.json({ ok: true, count: 0, users: [] });
   }
 });
 
@@ -2324,11 +2412,15 @@ app.get('/api/users', async (req, res) => {
 // NOTE: This must come BEFORE /api/users/:deviceId to avoid "count" being treated as a deviceId
 app.get('/api/users/count', async (req, res) => {
   try {
-    const count = await User.countDocuments();
-    res.json({ ok: true, count });
+    if (mongoUp()) {
+      const count = await User.countDocuments();
+      return res.json({ ok: true, count });
+    }
+    // No Mongo: report in-memory registered count
+    res.json({ ok: true, count: registeredPlayers.size });
   } catch (err) {
     console.error('[api/users/count] Error:', err.message);
-    res.status(500).json({ error: 'Server error' });
+    res.json({ ok: true, count: registeredPlayers.size });
   }
 });
 
@@ -2372,7 +2464,7 @@ app.post('/admin/login', (req, res) => {
 
   const token = jwt.sign(
     { email },
-    process.env.JWT_SECRET,
+    process.env.JWT_SECRET || 'dev-secret',
     { expiresIn: '24h' }
   );
 
@@ -2387,7 +2479,7 @@ function requireAdmin(req, res, next) {
   }
   try {
     const token = authHeader.split(' ')[1];
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'dev-secret');
     req.admin = decoded;
     next();
   } catch {
@@ -2395,14 +2487,336 @@ function requireAdmin(req, res, next) {
   }
 }
 
-// ─── Admin REST endpoint to push special session ──────────────────────────────
-app.post('/admin/special-session', (req, res) => {
-  specialSession = req.body;
-  io.emit('special_session_updated', specialSession);
-  broadcastToSpectators('special_session_updated', specialSession);
-  res.json({ ok: true });
+// ─── Question Bank ───────────────────────────────────────────────────────────
+// Questions live in MongoDB and are mirrored to an in-memory cache for fast,
+// synchronous reads during matchmaking. Population paths:
+//   1. Direct DB inserts (mongosh / Compass / `node seedQuestions.js`)
+//      then call `POST /admin/questions/refresh` to reload the cache.
+//   2. `POST /admin/questions` to replace the entire bank from the admin panel
+//      (writes to DB if connected, always updates the in-memory cache).
+
+// Body: { questions: [ { id, question, options:{A,B,C,D}, correct, category } ] }
+app.post('/admin/questions', requireAdmin, async (req, res) => {
+  const { questions } = req.body || {};
+  if (!Array.isArray(questions)) {
+    return res.status(400).json({ error: 'questions must be an array' });
+  }
+  // Validate basic shape
+  for (const q of questions) {
+    if (!q || !q.id || !q.question || !q.options ||
+        !['A','B','C','D'].includes(q.correct)) {
+      return res.status(400).json({ error: 'Invalid question shape', offender: q?.id || null });
+    }
+  }
+
+  // Persist to MongoDB when connected (replace strategy)
+  if (mongoUp()) {
+    try {
+      await Question.deleteMany({});
+      if (questions.length > 0) {
+        await Question.insertMany(questions, { ordered: false });
+      }
+      console.log(`[admin] Persisted ${questions.length} questions to MongoDB`);
+    } catch (e) {
+      console.error('[admin] Failed to persist questions to MongoDB:', e.message);
+      return res.status(500).json({ error: 'Failed to persist to database', detail: e.message });
+    }
+  }
+
+  // Update the in-memory cache. Done after DB write so the cache reflects DB state.
+  questionBank = questions;
+  io.emit('question_bank_updated', { count: questionBank.length });
+  broadcastToAdmins('question_bank_updated', { count: questionBank.length });
+  console.log(`[admin] Question bank updated — ${questionBank.length} questions in memory`);
+  res.json({ ok: true, count: questionBank.length, persistedToDb: mongoUp() });
 });
-app.get('/admin/special-session', (_, res) => res.json(specialSession));
+
+// Manually reload the in-memory cache. Uses MongoDB when connected,
+// otherwise falls back to `questions.example.json`. Use this after editing
+// the DB or the JSON file — no server restart needed.
+app.post('/admin/questions/refresh', requireAdmin, async (_req, res) => {
+  let count;
+  if (mongoUp()) {
+    count = await loadQuestionBankFromDB();
+    if (count === 0) count = loadQuestionBankFromFile();
+  } else {
+    count = loadQuestionBankFromFile();
+  }
+  io.emit('question_bank_updated', { count });
+  broadcastToAdmins('question_bank_updated', { count });
+  res.json({ ok: true, count, source: mongoUp() && count > 0 ? 'mongo+file' : (mongoUp() ? 'mongo' : 'file') });
+});
+
+app.get('/api/questions/count', (_, res) => res.json({ count: questionBank.length }));
+app.get('/admin/questions', requireAdmin, (_, res) => res.json({ count: questionBank.length, questions: questionBank }));
+
+// Public: returns the bank without the `correct` field so clients can render
+// questions locally during matches. Server still validates answers against
+// its own (full) copy of the bank.
+app.get('/api/questions', (_, res) => {
+  const sanitized = questionBank.map(q => ({
+    id: q.id,
+    question: q.question,
+    options: q.options,
+    category: q.category || 'General',
+  }));
+  res.json({ count: sanitized.length, questions: sanitized });
+});
+
+// ─── Admin: set tournament reward amount ─────────────────────────────────────
+app.post('/admin/tournament/reward', requireAdmin, (req, res) => {
+  const { rewardAmount } = req.body || {};
+  if (typeof rewardAmount !== 'string') {
+    return res.status(400).json({ error: 'rewardAmount must be a string (e.g. "₦20,000")' });
+  }
+  tournamentConfig.rewardAmount = rewardAmount.slice(0, 80);
+  io.emit('tournament_config_updated', {
+    rewardAmount: tournamentConfig.rewardAmount,
+    scheduledDate: tournamentConfig.scheduledDate,
+    tournamentStarted: tournamentConfig.tournamentStarted,
+    maxPlayers: tournamentConfig.maxPlayers,
+  });
+  console.log(`[admin] Reward amount set: ${tournamentConfig.rewardAmount}`);
+  res.json({ ok: true, rewardAmount: tournamentConfig.rewardAmount });
+});
+
+// In-memory store used when Mongo is not connected
+const inMemoryWinnerSubs = []; // [{ _id, ...fields }]
+
+// ─── Winner submission: only the champion can submit their reward details ────
+app.post('/api/tournament/winner-submit', async (req, res) => {
+  try {
+    const { deviceId, accountNumber, accountName, bankName, message } = req.body || {};
+    if (!deviceId || !accountNumber) {
+      return res.status(400).json({ error: 'deviceId and accountNumber are required' });
+    }
+    const player = registeredPlayers.get(deviceId);
+    if (!player || player.status !== 'champion') {
+      return res.status(403).json({ error: 'Only the tournament champion can submit reward details.' });
+    }
+    const tournamentId = tournamentConfig.tournamentId || tournamentConfig.scheduledDate || 'live';
+
+    const payload = {
+      tournamentId,
+      username: player.username,
+      deviceId,
+      accountNumber: String(accountNumber).trim().slice(0, 40),
+      accountName: String(accountName || '').trim().slice(0, 80),
+      bankName: String(bankName || '').trim().slice(0, 80),
+      message: String(message || '').trim().slice(0, 500),
+      rewardAmount: tournamentConfig.rewardAmount || '',
+    };
+
+    let doc;
+    if (mongoUp()) {
+      doc = await WinnerSubmission.findOneAndUpdate(
+        { deviceId, tournamentId },
+        payload,
+        { upsert: true, new: true, runValidators: true }
+      );
+    } else {
+      // In-memory fallback: upsert into the local array
+      const existingIdx = inMemoryWinnerSubs.findIndex(s => s.deviceId === deviceId && s.tournamentId === tournamentId);
+      const now = new Date();
+      const record = {
+        _id: existingIdx >= 0 ? inMemoryWinnerSubs[existingIdx]._id : 'mem_' + Date.now(),
+        ...payload,
+        paid: existingIdx >= 0 ? inMemoryWinnerSubs[existingIdx].paid : false,
+        createdAt: existingIdx >= 0 ? inMemoryWinnerSubs[existingIdx].createdAt : now,
+        updatedAt: now,
+      };
+      if (existingIdx >= 0) inMemoryWinnerSubs[existingIdx] = record;
+      else inMemoryWinnerSubs.unshift(record);
+      doc = record;
+    }
+
+    broadcastToAdmins('winner_submission', {
+      submission: {
+        _id: doc._id,
+        tournamentId: doc.tournamentId,
+        username: doc.username,
+        deviceId: doc.deviceId,
+        accountNumber: doc.accountNumber,
+        accountName: doc.accountName,
+        bankName: doc.bankName,
+        message: doc.message,
+        rewardAmount: doc.rewardAmount,
+        createdAt: doc.createdAt,
+      },
+    });
+    console.log(`[winner-submit] ${player.username} submitted account details for ${tournamentId}`);
+    res.json({ ok: true, submission: doc });
+  } catch (err) {
+    console.error('[winner-submit] Error:', err.message);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Admin: list all winner submissions
+app.get('/admin/tournament/winners', requireAdmin, async (_req, res) => {
+  try {
+    if (mongoUp()) {
+      const list = await WinnerSubmission.find({}).sort({ createdAt: -1 }).limit(200);
+      return res.json({ ok: true, count: list.length, submissions: list });
+    }
+    res.json({ ok: true, count: inMemoryWinnerSubs.length, submissions: inMemoryWinnerSubs });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Admin: mark a winner submission as paid
+app.post('/admin/tournament/winners/:id/paid', requireAdmin, async (req, res) => {
+  try {
+    if (mongoUp()) {
+      const doc = await WinnerSubmission.findByIdAndUpdate(req.params.id, { paid: true }, { new: true });
+      if (!doc) return res.status(404).json({ error: 'Submission not found' });
+      broadcastToAdmins('winner_submission_updated', { id: doc._id, paid: doc.paid });
+      return res.json({ ok: true, submission: doc });
+    }
+    const idx = inMemoryWinnerSubs.findIndex(s => s._id === req.params.id);
+    if (idx < 0) return res.status(404).json({ error: 'Submission not found' });
+    inMemoryWinnerSubs[idx] = { ...inMemoryWinnerSubs[idx], paid: true };
+    broadcastToAdmins('winner_submission_updated', { id: req.params.id, paid: true });
+    res.json({ ok: true, submission: inMemoryWinnerSubs[idx] });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// ─── Winner ⇄ Admin chat ─────────────────────────────────────────────────────
+// Messages are appended to the WinnerSubmission doc for the active tournament.
+// Both sides get a `chat_message` socket event in real time.
+
+function findSubByDeviceId(deviceId) {
+  if (mongoUp()) {
+    const tournamentId = tournamentConfig.tournamentId || tournamentConfig.scheduledDate || 'live';
+    return WinnerSubmission.findOne({ deviceId, tournamentId });
+  }
+  const tournamentId = tournamentConfig.tournamentId || tournamentConfig.scheduledDate || 'live';
+  return Promise.resolve(
+    inMemoryWinnerSubs.find(s => s.deviceId === deviceId && s.tournamentId === tournamentId) || null
+  );
+}
+
+function emitChatMessage(deviceId, message) {
+  // Push to admin sockets
+  broadcastToAdmins('chat_message', { deviceId, message });
+  // Push to the winner's own socket
+  const player = registeredPlayers.get(deviceId);
+  if (player && player.socketId) {
+    const sock = io.sockets.sockets.get(player.socketId);
+    if (sock) sock.emit('chat_message', { deviceId, message });
+  }
+}
+
+async function appendChatMessage(deviceId, from, text) {
+  const cleanText = String(text || '').trim().slice(0, 1000);
+  if (!cleanText) return null;
+  const message = { from, text: cleanText, createdAt: new Date() };
+
+  if (mongoUp()) {
+    const tournamentId = tournamentConfig.tournamentId || tournamentConfig.scheduledDate || 'live';
+    const doc = await WinnerSubmission.findOneAndUpdate(
+      { deviceId, tournamentId },
+      { $push: { messages: message } },
+      { new: true }
+    );
+    if (!doc) return null;
+    const saved = doc.messages[doc.messages.length - 1];
+    return {
+      _id: saved._id,
+      from: saved.from,
+      text: saved.text,
+      createdAt: saved.createdAt,
+    };
+  }
+
+  // In-memory fallback
+  const tournamentId = tournamentConfig.tournamentId || tournamentConfig.scheduledDate || 'live';
+  const rec = inMemoryWinnerSubs.find(s => s.deviceId === deviceId && s.tournamentId === tournamentId);
+  if (!rec) return null;
+  rec.messages = rec.messages || [];
+  const stored = { _id: 'mem_msg_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6), ...message };
+  rec.messages.push(stored);
+  return stored;
+}
+
+// Winner sends a chat message. Only the recorded champion device can post.
+app.post('/api/tournament/chat', async (req, res) => {
+  try {
+    const { deviceId, text } = req.body || {};
+    if (!deviceId || !text) return res.status(400).json({ error: 'deviceId and text are required' });
+    const player = registeredPlayers.get(deviceId);
+    if (!player || player.status !== 'champion') {
+      return res.status(403).json({ error: 'Only the tournament champion can chat here.' });
+    }
+    const sub = await findSubByDeviceId(deviceId);
+    if (!sub) {
+      return res.status(409).json({ error: 'Submit your account details first.' });
+    }
+    const message = await appendChatMessage(deviceId, 'winner', text);
+    if (!message) return res.status(400).json({ error: 'Empty message' });
+    emitChatMessage(deviceId, message);
+    res.json({ ok: true, message });
+  } catch (err) {
+    console.error('[chat] winner send error:', err.message);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Admin sends a chat message to a specific winner.
+app.post('/admin/tournament/chat/:deviceId', requireAdmin, async (req, res) => {
+  try {
+    const { deviceId } = req.params;
+    const { text } = req.body || {};
+    if (!text) return res.status(400).json({ error: 'text is required' });
+    const sub = await findSubByDeviceId(deviceId);
+    if (!sub) return res.status(404).json({ error: 'No winner submission for that device.' });
+    const message = await appendChatMessage(deviceId, 'admin', text);
+    if (!message) return res.status(400).json({ error: 'Empty message' });
+    emitChatMessage(deviceId, message);
+    res.json({ ok: true, message });
+  } catch (err) {
+    console.error('[chat] admin send error:', err.message);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Winner fetches their own chat history (after submitting details).
+app.get('/api/tournament/chat/:deviceId', async (req, res) => {
+  try {
+    const sub = await findSubByDeviceId(req.params.deviceId);
+    if (!sub) return res.json({ ok: true, messages: [] });
+    res.json({ ok: true, messages: sub.messages || [] });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Admin fetches chat thread for a specific winner.
+app.get('/admin/tournament/chat/:deviceId', requireAdmin, async (req, res) => {
+  try {
+    const sub = await findSubByDeviceId(req.params.deviceId);
+    if (!sub) return res.json({ ok: true, submission: null, messages: [] });
+    res.json({
+      ok: true,
+      submission: {
+        _id: sub._id,
+        username: sub.username,
+        deviceId: sub.deviceId,
+        rewardAmount: sub.rewardAmount,
+        paid: sub.paid,
+        accountNumber: sub.accountNumber,
+        accountName: sub.accountName,
+        bankName: sub.bankName,
+      },
+      messages: sub.messages || [],
+    });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
 
 // ─── Leaderboard REST endpoint ────────────────────────────────────────────────
 app.get('/leaderboard', (_, res) => res.json(getLeaderboardArray()));
@@ -2466,16 +2880,6 @@ app.get('/debug/state', (_, res) => {
   });
 });
 
-// ─── Bible Questions endpoint (for tournament) ───────────────────────────────
-// Returns the full Bible questions bank for the tournament
-app.get('/api/bible-questions', (_, res) => {
-  res.json({
-    ok: true,
-    count: BIBLE_QUESTIONS.length,
-    questions: BIBLE_QUESTIONS,
-  });
-});
-
 // ─── Tournament REST endpoints ───────────────────────────────────────────────
 // Get tournament status (public)
 app.get('/tournament/status', (_, res) => {
@@ -2486,10 +2890,15 @@ app.get('/tournament/status', (_, res) => {
     registrationOpen: isRegistrationMode(),
     registeredCount: registeredPlayers.size,
     activeCount: activePlayers.length,
+    maxPlayers: tournamentConfig.maxPlayers,
+    rewardAmount: tournamentConfig.rewardAmount,
+    tournamentId: tournamentConfig.tournamentId || tournamentConfig.scheduledDate || null,
+    currentRound,
+    questionBankSize: questionBank.length,
     players: [...registeredPlayers.values()].map(p => {
       const socket = p.socketId ? io.sockets.sockets.get(p.socketId) : null;
       const isOnline = socket && socket.connected;
-      return { username: p.username, joinedAt: p.joinedAt, isOnline };
+      return { username: p.username, joinedAt: p.joinedAt, isOnline, status: p.status };
     }),
   });
 });
@@ -2528,7 +2937,7 @@ app.get('/tournament/schedule', (_, res) => {
   });
 });
 
-// Admin: Set the bible quiz date & time — opens registration
+// Admin: Set the tournament date & time — opens registration
 // Protected: requires admin JWT
 // Body: { date: '2026-03-20', time: '18:00' }  OR  { scheduledDate: '<ISO string>' }
 app.post('/admin/tournament/set-schedule', requireAdmin, async (req, res) => {
@@ -2570,8 +2979,8 @@ app.post('/admin/tournament/set-schedule', requireAdmin, async (req, res) => {
       tournamentStarted: false,
     });
 
-    console.log(`[tournament] Bible quiz scheduled for ${scheduledDate} — registration open (saved to DB)`);
-    res.json({ ok: true, scheduledDate, message: 'Bible quiz scheduled! Registration is now open.' });
+    console.log(`[tournament] Scheduled for ${scheduledDate} — registration open (saved to DB)`);
+    res.json({ ok: true, scheduledDate, message: 'Tournament scheduled! Registration is now open.' });
   } catch (err) {
     console.error('[admin/tournament/set-schedule] Error:', err.message);
     res.status(500).json({ error: 'Server error' });
@@ -2698,7 +3107,8 @@ app.get('/api/state/:deviceId', (req, res) => {
         matchId,
         questionIndex: match.questionIndex,
         totalQuestions: match.questions?.length || 5,
-        currentQuestion: match.questions?.[match.questionIndex] || null,
+        questionIds: (match.questions || []).map(q => q.id),
+        currentQuestionId: match.questions?.[match.questionIndex]?.id || null,
         myAnswer: myPlayer.answer,
         opponentHasAnswered: opponent?.answer !== null,
         round: match.tournamentRound || 1,
@@ -2775,23 +3185,26 @@ app.post('/api/answer', (req, res) => {
 });
 
 // Admin: Reset tournament (clear schedule + all registrations → back to normal mode)
-app.post('/admin/tournament/reset', (req, res) => {
+app.post('/admin/tournament/reset', requireAdmin, (req, res) => {
   registeredPlayers.clear();
   tournamentConfig.scheduledDate = null;
   tournamentConfig.tournamentStarted = false;
+  tournamentConfig.tournamentId = null;
+  tournamentConfig.initialPlayerCount = 0;
   lobby.clear();
-  
+
   // Clear new queues
   waitingQueue.clear();
   winnersQueue.clear();
   playersInMatch.clear();
   bracketWinners.clear();
-  
+  currentRound = 1;
+
   // Clear all match timers
   for (const [matchId] of matchTimers) {
     cleanupMatchTimer(matchId);
   }
-  
+
   io.emit('tournament_reset', { message: 'Tournament has been reset' });
   console.log('[tournament] Reset — back to normal mode');
   res.json({ ok: true });
@@ -2946,7 +3359,7 @@ function tryPairBotsWithWaiting() {
       realSocket.emit('match_found', {
         matchId: match.matchId,
         seed: match.seed,
-        questions: match.questions,
+        questionIds: (match.questions || []).map(q => q.id),
         opponent: { username: bot.username, deviceId: bot.deviceId },
       });
     }
@@ -3058,6 +3471,10 @@ async function connectMongo(retryCount = 0) {
     mongoConnected = true;
     console.log('✅ Connected to MongoDB');
 
+    // Load the question bank from MongoDB into the in-memory cache.
+    // Matches read from `questionBank` (synchronous), so there is no DB hit per question.
+    await loadQuestionBankFromDB();
+
     // Load persisted tournament schedule from MongoDB on startup
     try {
       const savedSchedule = await TournamentSchedule.findOne({ status: 'scheduled' });
@@ -3073,7 +3490,7 @@ async function connectMongo(retryCount = 0) {
     } catch (scheduleErr) {
       console.error('⚠️ Could not load tournament schedule:', scheduleErr.message);
     }
-    
+
     return true;
   } catch (err) {
     console.error(`❌ MongoDB connection error (attempt ${retryCount + 1}/${maxRetries}):`, err.message);
@@ -3092,6 +3509,14 @@ async function connectMongo(retryCount = 0) {
 async function startServer() {
   // Try to connect to MongoDB, but don't fail if it doesn't work
   await connectMongo();
+
+  // If Mongo brought no questions (or Mongo never connected), fall back to the JSON file.
+  if (questionBank.length === 0) {
+    const loaded = loadQuestionBankFromFile();
+    if (loaded === 0) {
+      console.log('⚠️  Question bank is EMPTY — tournament cannot start until questions are added.');
+    }
+  }
 
   server.listen(PORT, () => {
     console.log(`\n🚀 QuizDuel server listening on http://localhost:${PORT}`);

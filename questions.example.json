@@ -1,0 +1,6062 @@
+[
+  {
+    "id": "q1",
+    "question": "Who won the Premier League in the 2022/23 season?",
+    "options": {
+      "A": "Arsenal",
+      "B": "Man City",
+      "C": "Man United",
+      "D": "Newcastle"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q2",
+    "question": "Which club has won the most Champions League titles?",
+    "options": {
+      "A": "Barcelona",
+      "B": "Bayern Munich",
+      "C": "Real Madrid",
+      "D": "AC Milan"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q3",
+    "question": "Which country won the 2022 FIFA World Cup?",
+    "options": {
+      "A": "France",
+      "B": "Argentina",
+      "C": "Brazil",
+      "D": "Croatia"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q4",
+    "question": "Which team has won the Bundesliga the most times?",
+    "options": {
+      "A": "Dortmund",
+      "B": "Bayern Munich",
+      "C": "Leverkusen",
+      "D": "Schalke"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q5",
+    "question": "Which club won La Liga in 2023/24?",
+    "options": {
+      "A": "Barcelona",
+      "B": "Real Madrid",
+      "C": "Atletico Madrid",
+      "D": "Girona"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q6",
+    "question": "Which team won Serie A in 2022/23?",
+    "options": {
+      "A": "Juventus",
+      "B": "Inter",
+      "C": "Napoli",
+      "D": "AC Milan"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q7",
+    "question": "Who scored in 3 Champions League finals for Real Madrid?",
+    "options": {
+      "A": "Benzema",
+      "B": "Ronaldo",
+      "C": "Bale",
+      "D": "Modric"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q8",
+    "question": "Who holds the record for most Premier League goals?",
+    "options": {
+      "A": "Rooney",
+      "B": "Kane",
+      "C": "Shearer",
+      "D": "Salah"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q9",
+    "question": "Who scored the winning goal in the 2010 World Cup final?",
+    "options": {
+      "A": "Iniesta",
+      "B": "Xavi",
+      "C": "Villa",
+      "D": "Torres"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q10",
+    "question": "Which club won La Liga in the 2023/24 season?",
+    "options": {
+      "A": "Barcelona",
+      "B": "Real Madrid",
+      "C": "Atletico Madrid",
+      "D": "Girona"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q11",
+    "question": "Which country hosted the 2023 Africa Cup of Nations?",
+    "options": {
+      "A": "Egypt",
+      "B": "Ivory Coast",
+      "C": "Cameroon",
+      "D": "Morocco"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q12",
+    "question": "Which manager won 3 Premier League titles with Chelsea?",
+    "options": {
+      "A": "Mourinho",
+      "B": "Ancelotti",
+      "C": "Conte",
+      "D": "Tuchel"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q13",
+    "question": "Which country has won the most World Cups?",
+    "options": {
+      "A": "Germany",
+      "B": "Argentina",
+      "C": "Brazil",
+      "D": "Italy"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q14",
+    "question": "Which team beat Real Madrid in the 2023/24 UCL Round of 16?",
+    "options": {
+      "A": "Man City",
+      "B": "Arsenal",
+      "C": "Bayern Munich",
+      "D": "RB Leipzig"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q15",
+    "question": "Who won the Ballon d’Or in 2023?",
+    "options": {
+      "A": "Mbappe",
+      "B": "Messi",
+      "C": "Haaland",
+      "D": "Bellingham"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q16",
+    "question": "Which club is nicknamed ‘The Gunners’?",
+    "options": {
+      "A": "Tottenham",
+      "B": "Arsenal",
+      "C": "West Ham",
+      "D": "Aston Villa"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q17",
+    "question": "Which Italian club is nicknamed ‘The Old Lady’?",
+    "options": {
+      "A": "AC Milan",
+      "B": "Inter",
+      "C": "Juventus",
+      "D": "Roma"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q18",
+    "question": "Which French club won the Champions League in 1993?",
+    "options": {
+      "A": "PSG",
+      "B": "Marseille",
+      "C": "Lyon",
+      "D": "Monaco"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q19",
+    "question": "Who won the Golden Boot at the 2022 World Cup?",
+    "options": {
+      "A": "Messi",
+      "B": "Mbappe",
+      "C": "Giroud",
+      "D": "Alvarez"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q20",
+    "question": "Which player has scored the most UCL goals?",
+    "options": {
+      "A": "Messi",
+      "B": "Ronaldo",
+      "C": "Lewandowski",
+      "D": "Benzema"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q21",
+    "question": "Which team went unbeaten in the 2003/04 Premier League season?",
+    "options": {
+      "A": "Man United",
+      "B": "Arsenal",
+      "C": "Chelsea",
+      "D": "Liverpool"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q22",
+    "question": "Which club is nicknamed ‘Die Roten’?",
+    "options": {
+      "A": "Dortmund",
+      "B": "Bayern Munich",
+      "C": "Leipzig",
+      "D": "Frankfurt"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q23",
+    "question": "Which country won AFCON 2023?",
+    "options": {
+      "A": "Nigeria",
+      "B": "Ivory Coast",
+      "C": "Senegal",
+      "D": "Morocco"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q24",
+    "question": "In which year was the first FIFA World Cup held?",
+    "options": {
+      "A": "1926",
+      "B": "1930",
+      "C": "1934",
+      "D": "1938"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q25",
+    "question": "Who scored the most goals in a single Premier League season?",
+    "options": {
+      "A": "Salah",
+      "B": "Haaland",
+      "C": "Shearer",
+      "D": "Kane"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q26",
+    "question": "Which club won the Champions League in 2012?",
+    "options": {
+      "A": "Barcelona",
+      "B": "Chelsea",
+      "C": "Bayern Munich",
+      "D": "Man United"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q27",
+    "question": "Who scored the famous ‘Hand of God’ goal?",
+    "options": {
+      "A": "Messi",
+      "B": "Maradona",
+      "C": "Pele",
+      "D": "Ronaldo"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q28",
+    "question": "Which club won the Bundesliga in 2022/23?",
+    "options": {
+      "A": "Dortmund",
+      "B": "Bayern Munich",
+      "C": "Leipzig",
+      "D": "Union Berlin"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q29",
+    "question": "Which club has won the most Ligue 1 titles?",
+    "options": {
+      "A": "PSG",
+      "B": "Marseille",
+      "C": "Lyon",
+      "D": "Monaco"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q30",
+    "question": "Which club won Serie A in 2023/24?",
+    "options": {
+      "A": "Inter",
+      "B": "AC Milan",
+      "C": "Juventus",
+      "D": "Napoli"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q31",
+    "question": "Which club is nicknamed ‘The Blues’?",
+    "options": {
+      "A": "Man City",
+      "B": "Chelsea",
+      "C": "Everton",
+      "D": "Leicester"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q32",
+    "question": "Which country hosted the 2018 World Cup?",
+    "options": {
+      "A": "Brazil",
+      "B": "Russia",
+      "C": "Qatar",
+      "D": "Germany"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q33",
+    "question": "Who scored the bicycle kick for Ronaldo in the 2018 UCL quarterfinal?",
+    "options": {
+      "A": "Bale",
+      "B": "Ronaldo",
+      "C": "Benzema",
+      "D": "Modric"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q34",
+    "question": "Which country has won the most AFCON titles?",
+    "options": {
+      "A": "Nigeria",
+      "B": "Ghana",
+      "C": "Egypt",
+      "D": "Cameroon"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q35",
+    "question": "Who won the Premier League Golden Boot in 2023/24?",
+    "options": {
+      "A": "Salah",
+      "B": "Haaland",
+      "C": "Watkins",
+      "D": "Palmer"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q36",
+    "question": "Which German club is nicknamed ‘Die Borussen’?",
+    "options": {
+      "A": "Bayern",
+      "B": "Dortmund",
+      "C": "Leverkusen",
+      "D": "Gladbach"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q37",
+    "question": "Who won the 2014 World Cup?",
+    "options": {
+      "A": "Brazil",
+      "B": "Argentina",
+      "C": "Germany",
+      "D": "Spain"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q38",
+    "question": "Which team completed a treble in 2014/15?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Barcelona",
+      "C": "Bayern",
+      "D": "Man City"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q39",
+    "question": "Which club is nicknamed ‘Los Blancos’?",
+    "options": {
+      "A": "Barcelona",
+      "B": "Atletico",
+      "C": "Real Madrid",
+      "D": "Sevilla"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q40",
+    "question": "Which club has the most Premier League titles?",
+    "options": {
+      "A": "Arsenal",
+      "B": "Chelsea",
+      "C": "Man United",
+      "D": "Man City"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q41",
+    "question": "Who scored a hat-trick in the 1966 World Cup final?",
+    "options": {
+      "A": "Charlton",
+      "B": "Hurst",
+      "C": "Pele",
+      "D": "Moore"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q42",
+    "question": "Which club won the UCL in 2021/22?",
+    "options": {
+      "A": "Man City",
+      "B": "Liverpool",
+      "C": "Real Madrid",
+      "D": "Chelsea"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q43",
+    "question": "Which country won AFCON 2021?",
+    "options": {
+      "A": "Senegal",
+      "B": "Egypt",
+      "C": "Cameroon",
+      "D": "Algeria"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q44",
+    "question": "Who was the first African to win the Premier League Golden Boot?",
+    "options": {
+      "A": "Drogba",
+      "B": "Eto’o",
+      "C": "Aubameyang",
+      "D": "Salah"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q45",
+    "question": "Which team won the Bundesliga in 2011/12, breaking Bayern’s run?",
+    "options": {
+      "A": "Schalke",
+      "B": "Dortmund",
+      "C": "Leverkusen",
+      "D": "Wolfsburg"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q46",
+    "question": "Which country will host the 2026 World Cup?",
+    "options": {
+      "A": "USA only",
+      "B": "USA, Mexico, Canada",
+      "C": "Spain",
+      "D": "Morocco"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q47",
+    "question": "Who has the most UCL assists of all time?",
+    "options": {
+      "A": "Xavi",
+      "B": "Messi",
+      "C": "Ronaldo",
+      "D": "Ozil"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q48",
+    "question": "Which club signed Erling Haaland in 2022?",
+    "options": {
+      "A": "Man United",
+      "B": "Man City",
+      "C": "Liverpool",
+      "D": "Chelsea"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q49",
+    "question": "Which team won the UCL in 2005 in Istanbul?",
+    "options": {
+      "A": "AC Milan",
+      "B": "Liverpool",
+      "C": "Juventus",
+      "D": "Chelsea"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q50",
+    "question": "Who won the Golden Ball at the 2018 World Cup?",
+    "options": {
+      "A": "Mbappe",
+      "B": "Modric",
+      "C": "Kane",
+      "D": "Hazard"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q51",
+    "question": "Which club did Robert Lewandowski leave for Barcelona?",
+    "options": {
+      "A": "Dortmund",
+      "B": "Bayern Munich",
+      "C": "Leipzig",
+      "D": "Wolfsburg"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q52",
+    "question": "Which French club did Zinedine Zidane play for?",
+    "options": {
+      "A": "PSG",
+      "B": "Marseille",
+      "C": "Lyon",
+      "D": "Bordeaux"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q53",
+    "question": "Who scored the most goals in El Clasico history?",
+    "options": {
+      "A": "Ronaldo",
+      "B": "Messi",
+      "C": "Raul",
+      "D": "Di Stefano"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q54",
+    "question": "Which Italian club is nicknamed ‘I Rossoneri’?",
+    "options": {
+      "A": "Juventus",
+      "B": "Inter",
+      "C": "AC Milan",
+      "D": "Napoli"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q55",
+    "question": "Which manager won the Premier League with Leicester in 2016?",
+    "options": {
+      "A": "Klopp",
+      "B": "Ranieri",
+      "C": "Mourinho",
+      "D": "Pellegrini"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q56",
+    "question": "Who scored 8 goals in the 1958 World Cup as a teenager?",
+    "options": {
+      "A": "Maradona",
+      "B": "Pele",
+      "C": "Cruyff",
+      "D": "Beckenbauer"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q57",
+    "question": "Which English club has won the UCL 6 times?",
+    "options": {
+      "A": "Man United",
+      "B": "Liverpool",
+      "C": "Chelsea",
+      "D": "Arsenal"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q58",
+    "question": "Who won AFCON 2019?",
+    "options": {
+      "A": "Egypt",
+      "B": "Algeria",
+      "C": "Senegal",
+      "D": "Nigeria"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q59",
+    "question": "Which goalkeeper holds the Premier League clean sheet record?",
+    "options": {
+      "A": "De Gea",
+      "B": "Cech",
+      "C": "Alisson",
+      "D": "Ederson"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q60",
+    "question": "Which club did Jurgen Klopp manage in the Bundesliga?",
+    "options": {
+      "A": "Bayern",
+      "B": "Dortmund",
+      "C": "Leverkusen",
+      "D": "Schalke"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q61",
+    "question": "Which country beat Brazil 7-1 in the 2014 World Cup semifinal?",
+    "options": {
+      "A": "Germany",
+      "B": "Argentina",
+      "C": "Netherlands",
+      "D": "France"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q62",
+    "question": "Which club did Luis Suarez play for in La Liga?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Barcelona",
+      "C": "Atletico",
+      "D": "Sevilla"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q63",
+    "question": "Which club has won the most Serie A titles?",
+    "options": {
+      "A": "AC Milan",
+      "B": "Inter",
+      "C": "Juventus",
+      "D": "Napoli"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q64",
+    "question": "Who was the first manager to win the Premier League?",
+    "options": {
+      "A": "Ferguson",
+      "B": "Wenger",
+      "C": "Dalglish",
+      "D": "Robson"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q65",
+    "question": "Which country won the first ever World Cup in 1930?",
+    "options": {
+      "A": "Brazil",
+      "B": "Italy",
+      "C": "Uruguay",
+      "D": "Argentina"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q66",
+    "question": "Which club won the UCL in 2010 under Mourinho?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Inter",
+      "C": "Chelsea",
+      "D": "Barcelona"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q67",
+    "question": "Which country won AFCON 2015?",
+    "options": {
+      "A": "Ghana",
+      "B": "Ivory Coast",
+      "C": "Nigeria",
+      "D": "Algeria"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q68",
+    "question": "Which player has the most Premier League assists?",
+    "options": {
+      "A": "Gerrard",
+      "B": "Giggs",
+      "C": "De Bruyne",
+      "D": "Fabregas"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q69",
+    "question": "Which club won the Bundesliga in 2008/09?",
+    "options": {
+      "A": "Bayern",
+      "B": "Wolfsburg",
+      "C": "Dortmund",
+      "D": "Leverkusen"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q70",
+    "question": "Who scored the winning penalty for Argentina in the 2022 World Cup final?",
+    "options": {
+      "A": "Di Maria",
+      "B": "Messi",
+      "C": "Montiel",
+      "D": "Martinez"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q71",
+    "question": "Which player scored in 11 consecutive UCL matches?",
+    "options": {
+      "A": "Messi",
+      "B": "Ronaldo",
+      "C": "Haaland",
+      "D": "Lewandowski"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q72",
+    "question": "Which club is nicknamed ‘The Magpies’?",
+    "options": {
+      "A": "Everton",
+      "B": "Newcastle",
+      "C": "Aston Villa",
+      "D": "Crystal Palace"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q73",
+    "question": "Who scored 17 UCL goals in the 2013/14 season?",
+    "options": {
+      "A": "Messi",
+      "B": "Ronaldo",
+      "C": "Benzema",
+      "D": "Lewandowski"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q74",
+    "question": "Who won the Golden Glove at the 2022 World Cup?",
+    "options": {
+      "A": "Neuer",
+      "B": "Martinez",
+      "C": "Courtois",
+      "D": "Allison"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q75",
+    "question": "Which club did Thomas Muller spend his whole career at?",
+    "options": {
+      "A": "Dortmund",
+      "B": "Bayern Munich",
+      "C": "Leipzig",
+      "D": "Schalke"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q76",
+    "question": "Which club did Kylian Mbappe join from Monaco?",
+    "options": {
+      "A": "Lyon",
+      "B": "PSG",
+      "C": "Marseille",
+      "D": "Lille"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q77",
+    "question": "Who won La Liga in 2020/21?",
+    "options": {
+      "A": "Barcelona",
+      "B": "Real Madrid",
+      "C": "Atletico Madrid",
+      "D": "Sevilla"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q78",
+    "question": "Which club did Diego Maradona play for in Serie A?",
+    "options": {
+      "A": "Juventus",
+      "B": "AC Milan",
+      "C": "Napoli",
+      "D": "Inter"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q79",
+    "question": "Which country beat England on penalties in the 1990 World Cup semifinal?",
+    "options": {
+      "A": "Germany",
+      "B": "Italy",
+      "C": "Argentina",
+      "D": "Brazil"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q80",
+    "question": "Which team won the UCL in 1999?",
+    "options": {
+      "A": "Bayern Munich",
+      "B": "Man United",
+      "C": "Real Madrid",
+      "D": "Barcelona"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q81",
+    "question": "Who won AFCON 2013?",
+    "options": {
+      "A": "Nigeria",
+      "B": "Ghana",
+      "C": "Ivory Coast",
+      "D": "Burkina Faso"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q82",
+    "question": "Which club signed Mohamed Salah from Roma?",
+    "options": {
+      "A": "Man City",
+      "B": "Liverpool",
+      "C": "Chelsea",
+      "D": "Arsenal"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q83",
+    "question": "Who scored 13 goals in the 1982 World Cup?",
+    "options": {
+      "A": "Pele",
+      "B": "Muller",
+      "C": "Rossi",
+      "D": "Maradona"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q84",
+    "question": "Which club won the UCL in 2008?",
+    "options": {
+      "A": "Chelsea",
+      "B": "Man United",
+      "C": "Barcelona",
+      "D": "Liverpool"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q85",
+    "question": "Who won the Ballon d’Or in 2019?",
+    "options": {
+      "A": "Ronaldo",
+      "B": "Messi",
+      "C": "Van Dijk",
+      "D": "Mbappe"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q86",
+    "question": "Which club is nicknamed ‘I Nerazzurri’?",
+    "options": {
+      "A": "Juventus",
+      "B": "AC Milan",
+      "C": "Inter",
+      "D": "Roma"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q87",
+    "question": "Who won the Premier League with Man City in 2017/18?",
+    "options": {
+      "A": "Mourinho",
+      "B": "Guardiola",
+      "C": "Klopp",
+      "D": "Pochettino"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q88",
+    "question": "Which country won the 2006 World Cup?",
+    "options": {
+      "A": "Brazil",
+      "B": "Italy",
+      "C": "France",
+      "D": "Germany"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q89",
+    "question": "Who scored a hat-trick in the 2015 UCL final?",
+    "options": {
+      "A": "Messi",
+      "B": "Neymar",
+      "C": "Suarez",
+      "D": "Morata"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q90",
+    "question": "Which country won AFCON 2017?",
+    "options": {
+      "A": "Egypt",
+      "B": "Cameroon",
+      "C": "Ghana",
+      "D": "Burkina Faso"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q91",
+    "question": "Which club did Franck Ribery play for in the Bundesliga?",
+    "options": {
+      "A": "Dortmund",
+      "B": "Bayern Munich",
+      "C": "Leverkusen",
+      "D": "Wolfsburg"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q92",
+    "question": "Which club won the UCL in 2013?",
+    "options": {
+      "A": "Dortmund",
+      "B": "Bayern Munich",
+      "C": "Barcelona",
+      "D": "Real Madrid"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q93",
+    "question": "Who scored 32 Premier League goals in 2017/18?",
+    "options": {
+      "A": "Kane",
+      "B": "Salah",
+      "C": "Aguero",
+      "D": "Lukaku"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q94",
+    "question": "Which club won the UCL in 2009?",
+    "options": {
+      "A": "Man United",
+      "B": "Barcelona",
+      "C": "Chelsea",
+      "D": "Real Madrid"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q95",
+    "question": "Who won the 2002 World Cup?",
+    "options": {
+      "A": "Germany",
+      "B": "Brazil",
+      "C": "France",
+      "D": "Argentina"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q96",
+    "question": "Which club did Arjen Robben play for in the Bundesliga?",
+    "options": {
+      "A": "Dortmund",
+      "B": "Bayern Munich",
+      "C": "Leverkusen",
+      "D": "Schalke"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q97",
+    "question": "Which club won Ligue 1 in 2016/17, breaking PSG’s run?",
+    "options": {
+      "A": "Marseille",
+      "B": "Lyon",
+      "C": "Monaco",
+      "D": "Lille"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q98",
+    "question": "Who won La Liga in 2018/19?",
+    "options": {
+      "A": "Atletico",
+      "B": "Barcelona",
+      "C": "Real Madrid",
+      "D": "Sevilla"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q99",
+    "question": "Which club won Serie A in 2019/20?",
+    "options": {
+      "A": "Inter",
+      "B": "Juventus",
+      "C": "AC Milan",
+      "D": "Lazio"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q100",
+    "question": "Which country hosted the 2006 World Cup?",
+    "options": {
+      "A": "Brazil",
+      "B": "Germany",
+      "C": "South Africa",
+      "D": "Japan"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q101",
+    "question": "Who won AFCON 2012?",
+    "options": {
+      "A": "Zambia",
+      "B": "Ivory Coast",
+      "C": "Ghana",
+      "D": "Nigeria"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q102",
+    "question": "Which club did N’Golo Kante win the Premier League with twice?",
+    "options": {
+      "A": "Arsenal",
+      "B": "Chelsea",
+      "C": "Leicester + Chelsea",
+      "D": "Man City"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q103",
+    "question": "Who scored the fastest World Cup goal ever?",
+    "options": {
+      "A": "Hakan Sukur",
+      "B": "Klose",
+      "C": "Muller",
+      "D": "Ronaldo"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q104",
+    "question": "Which club won the UCL in 2004?",
+    "options": {
+      "A": "AC Milan",
+      "B": "Porto",
+      "C": "Monaco",
+      "D": "Man United"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q105",
+    "question": "Who won La Liga in 2015/16?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Barcelona",
+      "C": "Atletico",
+      "D": "Sevilla"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q106",
+    "question": "Which club did Thierry Henry play for in the Premier League?",
+    "options": {
+      "A": "Man United",
+      "B": "Arsenal",
+      "C": "Chelsea",
+      "D": "Liverpool"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q107",
+    "question": "Who won the 1994 World Cup?",
+    "options": {
+      "A": "Brazil",
+      "B": "Italy",
+      "C": "Germany",
+      "D": "Argentina"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q108",
+    "question": "Which club won the UCL in 2002?",
+    "options": {
+      "A": "Barcelona",
+      "B": "Real Madrid",
+      "C": "Bayern",
+      "D": "Valencia"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q109",
+    "question": "Who won AFCON 2010?",
+    "options": {
+      "A": "Egypt",
+      "B": "Ghana",
+      "C": "Nigeria",
+      "D": "Ivory Coast"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q110",
+    "question": "Which club won the Bundesliga in 2003/04?",
+    "options": {
+      "A": "Bayern",
+      "B": "Werder Bremen",
+      "C": "Dortmund",
+      "D": "Leverkusen"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q111",
+    "question": "Who scored 14 World Cup goals total, the record?",
+    "options": {
+      "A": "Pele",
+      "B": "Klose",
+      "C": "Ronaldo",
+      "D": "Muller"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q112",
+    "question": "Which club won the UCL in 2001?",
+    "options": {
+      "A": "Bayern Munich",
+      "B": "Valencia",
+      "C": "Real Madrid",
+      "D": "Man United"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q113",
+    "question": "Who won the Premier League Golden Boot in 2013/14?",
+    "options": {
+      "A": "Aguero",
+      "B": "Suarez",
+      "C": "Sturridge",
+      "D": "Rooney"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q114",
+    "question": "Which club won the UCL in 2000?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Bayern Munich",
+      "C": "Valencia",
+      "D": "Man United"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q115",
+    "question": "Who won the 1998 World Cup?",
+    "options": {
+      "A": "Brazil",
+      "B": "France",
+      "C": "Italy",
+      "D": "Germany"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q116",
+    "question": "Which club won Ligue 1 in 2015/16?",
+    "options": {
+      "A": "Marseille",
+      "B": "PSG",
+      "C": "Monaco",
+      "D": "Lyon"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q117",
+    "question": "Who won La Liga in 2014/15?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Barcelona",
+      "C": "Atletico",
+      "D": "Valencia"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q118",
+    "question": "Which club did Didier Drogba play for in the Premier League?",
+    "options": {
+      "A": "Arsenal",
+      "B": "Chelsea",
+      "C": "Man United",
+      "D": "Liverpool"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q119",
+    "question": "Who won the 1990 World Cup?",
+    "options": {
+      "A": "Argentina",
+      "B": "Germany",
+      "C": "Italy",
+      "D": "Brazil"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q120",
+    "question": "Which club won the UCL in 1999/2000?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Valencia",
+      "C": "Bayern",
+      "D": "Man United"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q121",
+    "question": "Who won AFCON 2008?",
+    "options": {
+      "A": "Egypt",
+      "B": "Ghana",
+      "C": "Cameroon",
+      "D": "Ivory Coast"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q122",
+    "question": "Which club won the Bundesliga in 2009/10?",
+    "options": {
+      "A": "Bayern",
+      "B": "Dortmund",
+      "C": "Leverkusen",
+      "D": "Schalke"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q123",
+    "question": "Who won the 1986 World Cup?",
+    "options": {
+      "A": "Brazil",
+      "B": "Argentina",
+      "C": "Germany",
+      "D": "Italy"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q124",
+    "question": "Which club won the UCL in 1998?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Juventus",
+      "C": "Ajax",
+      "D": "Bayern"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q125",
+    "question": "Who won La Liga in 2013/14?",
+    "options": {
+      "A": "Barcelona",
+      "B": "Real Madrid",
+      "C": "Atletico Madrid",
+      "D": "Sevilla"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q126",
+    "question": "Which club did Patrick Vieira captain in the Premier League?",
+    "options": {
+      "A": "Man United",
+      "B": "Arsenal",
+      "C": "Chelsea",
+      "D": "Liverpool"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q127",
+    "question": "Who won the 1982 World Cup?",
+    "options": {
+      "A": "Brazil",
+      "B": "Italy",
+      "C": "Germany",
+      "D": "Argentina"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q128",
+    "question": "Which club won the UCL in 1997?",
+    "options": {
+      "A": "Dortmund",
+      "B": "Juventus",
+      "C": "Ajax",
+      "D": "Bayern"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q129",
+    "question": "Who won AFCON 2006?",
+    "options": {
+      "A": "Egypt",
+      "B": "Ivory Coast",
+      "C": "Cameroon",
+      "D": "Nigeria"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q130",
+    "question": "Who won the 1978 World Cup?",
+    "options": {
+      "A": "Brazil",
+      "B": "Argentina",
+      "C": "Germany",
+      "D": "Netherlands"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q131",
+    "question": "Which club won the UCL in 1996?",
+    "options": {
+      "A": "Juventus",
+      "B": "Ajax",
+      "C": "Bayern",
+      "D": "Man United"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q132",
+    "question": "Which club won the UCL in 1995?",
+    "options": {
+      "A": "Ajax",
+      "B": "AC Milan",
+      "C": "Juventus",
+      "D": "Bayern"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q133",
+    "question": "Who won the 1974 World Cup?",
+    "options": {
+      "A": "Brazil",
+      "B": "Germany",
+      "C": "Netherlands",
+      "D": "Italy"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q134",
+    "question": "Which club won Ligue 1 in 2014/15?",
+    "options": {
+      "A": "Lyon",
+      "B": "Marseille",
+      "C": "PSG",
+      "D": "Monaco"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q135",
+    "question": "Who won La Liga in 2012/13?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Barcelona",
+      "C": "Atletico",
+      "D": "Valencia"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q136",
+    "question": "Which club did Steven Gerrard captain in the Premier League?",
+    "options": {
+      "A": "Man United",
+      "B": "Liverpool",
+      "C": "Chelsea",
+      "D": "Arsenal"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q137",
+    "question": "Who won the 1970 World Cup?",
+    "options": {
+      "A": "Brazil",
+      "B": "Italy",
+      "C": "Germany",
+      "D": "England"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q138",
+    "question": "Which club won the UCL in 1994?",
+    "options": {
+      "A": "AC Milan",
+      "B": "Barcelona",
+      "C": "Ajax",
+      "D": "Real Madrid"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q139",
+    "question": "Who won AFCON 2004?",
+    "options": {
+      "A": "Tunisia",
+      "B": "Morocco",
+      "C": "Nigeria",
+      "D": "Cameroon"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q140",
+    "question": "Which club won the Bundesliga in 2005/06?",
+    "options": {
+      "A": "Bayern",
+      "B": "Dortmund",
+      "C": "Leverkusen",
+      "D": "Schalke"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q141",
+    "question": "Who won the 1966 World Cup?",
+    "options": {
+      "A": "Brazil",
+      "B": "England",
+      "C": "Germany",
+      "D": "Italy"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q142",
+    "question": "Which club won the UCL in 1993?",
+    "options": {
+      "A": "Marseille",
+      "B": "AC Milan",
+      "C": "Barcelona",
+      "D": "Ajax"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q143",
+    "question": "Who won La Liga in 2011/12?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Barcelona",
+      "C": "Atletico",
+      "D": "Valencia"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q144",
+    "question": "Which club did Wayne Rooney play for in the Premier League?",
+    "options": {
+      "A": "Arsenal",
+      "B": "Man United",
+      "C": "Chelsea",
+      "D": "Liverpool"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q145",
+    "question": "Who won the 1962 World Cup?",
+    "options": {
+      "A": "Brazil",
+      "B": "Italy",
+      "C": "Germany",
+      "D": "England"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q146",
+    "question": "Which club won the UCL in 1992?",
+    "options": {
+      "A": "Barcelona",
+      "B": "Sampdoria",
+      "C": "Marseille",
+      "D": "AC Milan"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q147",
+    "question": "Who won AFCON 2002?",
+    "options": {
+      "A": "Cameroon",
+      "B": "Senegal",
+      "C": "Nigeria",
+      "D": "Egypt"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q148",
+    "question": "Who won the 1958 World Cup?",
+    "options": {
+      "A": "Brazil",
+      "B": "Sweden",
+      "C": "Germany",
+      "D": "Hungary"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q149",
+    "question": "Which club won the UCL in 1991?",
+    "options": {
+      "A": "Red Star Belgrade",
+      "B": "Marseille",
+      "C": "AC Milan",
+      "D": "Barcelona"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q150",
+    "question": "Which club won the UCL in 1990?",
+    "options": {
+      "A": "AC Milan",
+      "B": "Benfica",
+      "C": "Real Madrid",
+      "D": "Ajax"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q151",
+    "question": "Who won the 1954 World Cup?",
+    "options": {
+      "A": "Brazil",
+      "B": "West Germany",
+      "C": "Hungary",
+      "D": "Uruguay"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q152",
+    "question": "Which club won the Bundesliga in 2004/05?",
+    "options": {
+      "A": "Bayern",
+      "B": "Dortmund",
+      "C": "Leverkusen",
+      "D": "Schalke"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q153",
+    "question": "Which club won Ligue 1 in 2013/14?",
+    "options": {
+      "A": "Marseille",
+      "B": "PSG",
+      "C": "Monaco",
+      "D": "Lille"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q154",
+    "question": "Who won La Liga in 2010/11?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Barcelona",
+      "C": "Atletico",
+      "D": "Valencia"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q155",
+    "question": "Which club did Frank Lampard play for in the Premier League?",
+    "options": {
+      "A": "Arsenal",
+      "B": "Chelsea",
+      "C": "Man United",
+      "D": "Liverpool"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q156",
+    "question": "Who won the 1950 World Cup?",
+    "options": {
+      "A": "Brazil",
+      "B": "Uruguay",
+      "C": "Italy",
+      "D": "Hungary"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q157",
+    "question": "Which club won the UCL in 1989?",
+    "options": {
+      "A": "AC Milan",
+      "B": "Steaua Bucharest",
+      "C": "Real Madrid",
+      "D": "Bayern"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q158",
+    "question": "Who won AFCON 2000?",
+    "options": {
+      "A": "Cameroon",
+      "B": "Nigeria",
+      "C": "Ghana",
+      "D": "Tunisia"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q159",
+    "question": "Who won the 1938 World Cup?",
+    "options": {
+      "A": "Brazil",
+      "B": "Italy",
+      "C": "Hungary",
+      "D": "Germany"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q160",
+    "question": "Which club won the UCL in 1988?",
+    "options": {
+      "A": "PSV Eindhoven",
+      "B": "Benfica",
+      "C": "AC Milan",
+      "D": "Real Madrid"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q161",
+    "question": "Who won La Liga in 2009/10?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Barcelona",
+      "C": "Atletico",
+      "D": "Sevilla"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q162",
+    "question": "Which club did Alan Shearer play for in the Premier League?",
+    "options": {
+      "A": "Arsenal",
+      "B": "Newcastle",
+      "C": "Man United",
+      "D": "Chelsea"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q163",
+    "question": "Who won the 1934 World Cup?",
+    "options": {
+      "A": "Italy",
+      "B": "Czechoslovakia",
+      "C": "Germany",
+      "D": "Austria"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q164",
+    "question": "Which club won the UCL in 1987?",
+    "options": {
+      "A": "Porto",
+      "B": "Bayern Munich",
+      "C": "Ajax",
+      "D": "Real Madrid"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q165",
+    "question": "Who won AFCON 1998?",
+    "options": {
+      "A": "Egypt",
+      "B": "South Africa",
+      "C": "Nigeria",
+      "D": "Cameroon"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q166",
+    "question": "Which club won the Bundesliga in 2002/03?",
+    "options": {
+      "A": "Bayern",
+      "B": "Dortmund",
+      "C": "Leverkusen",
+      "D": "Schalke"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q167",
+    "question": "Who won the 1930 World Cup?",
+    "options": {
+      "A": "Brazil",
+      "B": "Uruguay",
+      "C": "Italy",
+      "D": "Argentina"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q168",
+    "question": "Which club won the UCL in 1986?",
+    "options": {
+      "A": "Steaua Bucharest",
+      "B": "Barcelona",
+      "C": "Real Madrid",
+      "D": "Bayern"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q169",
+    "question": "Who won the Ballon d’Or in 2022?",
+    "options": {
+      "A": "Messi",
+      "B": "Benzema",
+      "C": "Mbappe",
+      "D": "Lewandowski"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q170",
+    "question": "Which player was the world record transfer when PSG signed him in 2017?",
+    "options": {
+      "A": "Ronaldo",
+      "B": "Neymar",
+      "C": "Mbappe",
+      "D": "Bale"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q171",
+    "question": "Which club won the UCL in 1985?",
+    "options": {
+      "A": "Juventus",
+      "B": "Liverpool",
+      "C": "AC Milan",
+      "D": "Bayern"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q172",
+    "question": "Who won the Ballon d’Or at the 2014 World Cup?",
+    "options": {
+      "A": "Messi",
+      "B": "Neuer",
+      "C": "Rodriguez",
+      "D": "Robben"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q173",
+    "question": "Which club won the Bundesliga in 2001/02?",
+    "options": {
+      "A": "Bayern",
+      "B": "Dortmund",
+      "C": "Leverkusen",
+      "D": "Schalke"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q174",
+    "question": "Which club won Ligue 1 in 2012/13?",
+    "options": {
+      "A": "Marseille",
+      "B": "PSG",
+      "C": "Lyon",
+      "D": "Monaco"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q175",
+    "question": "Who won La Liga in 2008/09?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Barcelona",
+      "C": "Atletico",
+      "D": "Sevilla"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q176",
+    "question": "Who won the Ballon d’Or in 2018?",
+    "options": {
+      "A": "Messi",
+      "B": "Ronaldo",
+      "C": "Modric",
+      "D": "Mbappe"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q177",
+    "question": "Which club signed Jack Grealish for a British record fee in 2021?",
+    "options": {
+      "A": "Man United",
+      "B": "Man City",
+      "C": "Chelsea",
+      "D": "Liverpool"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q178",
+    "question": "Which club won the UCL in 1984?",
+    "options": {
+      "A": "Liverpool",
+      "B": "Roma",
+      "C": "Juventus",
+      "D": "Bayern"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q179",
+    "question": "Who won the Golden Ball at the 2006 World Cup?",
+    "options": {
+      "A": "Zidane",
+      "B": "Cannavaro",
+      "C": "Pirlo",
+      "D": "Klose"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q180",
+    "question": "Which club won the Bundesliga in 2000/01?",
+    "options": {
+      "A": "Bayern",
+      "B": "Dortmund",
+      "C": "Leverkusen",
+      "D": "Schalke"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q181",
+    "question": "Who won the Ballon d’Or in 2010?",
+    "options": {
+      "A": "Messi",
+      "B": "Iniesta",
+      "C": "Xavi",
+      "D": "Sneijder"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q182",
+    "question": "Which club signed Paul Pogba from Juventus for £89m in 2016?",
+    "options": {
+      "A": "Man City",
+      "B": "Man United",
+      "C": "Chelsea",
+      "D": "Arsenal"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q183",
+    "question": "Which club won the UCL in 1983?",
+    "options": {
+      "A": "Hamburg",
+      "B": "Juventus",
+      "C": "Liverpool",
+      "D": "Bayern"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q184",
+    "question": "Who won the Golden Ball at the 2002 World Cup?",
+    "options": {
+      "A": "Ronaldo",
+      "B": "Kahn",
+      "C": "Ballack",
+      "D": "Ronaldinho"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q185",
+    "question": "Which club won the Bundesliga in 1999/2000?",
+    "options": {
+      "A": "Bayern",
+      "B": "Dortmund",
+      "C": "Leverkusen",
+      "D": "Schalke"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q186",
+    "question": "Who won the Ballon d’Or in 2006?",
+    "options": {
+      "A": "Ronaldinho",
+      "B": "Cannavaro",
+      "C": "Zidane",
+      "D": "Henry"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q187",
+    "question": "Which club signed Gareth Bale from Tottenham for £85m in 2013?",
+    "options": {
+      "A": "Barcelona",
+      "B": "Real Madrid",
+      "C": "Man United",
+      "D": "PSG"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q188",
+    "question": "Which club won the UCL in 1982?",
+    "options": {
+      "A": "Aston Villa",
+      "B": "Bayern Munich",
+      "C": "Liverpool",
+      "D": "Juventus"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q189",
+    "question": "Who won the Ballon d’Or in 2004?",
+    "options": {
+      "A": "Henry",
+      "B": "Shevchenko",
+      "C": "Ronaldinho",
+      "D": "Zidane"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q190",
+    "question": "Which club signed Luis Suarez from Liverpool for £75m in 2014?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Barcelona",
+      "C": "Bayern",
+      "D": "PSG"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q191",
+    "question": "Which club won the UCL in 1981?",
+    "options": {
+      "A": "Liverpool",
+      "B": "Real Madrid",
+      "C": "Bayern",
+      "D": "Aston Villa"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q192",
+    "question": "Who won the Golden Ball at the 1998 World Cup?",
+    "options": {
+      "A": "Zidane",
+      "B": "Ronaldo",
+      "C": "Davids",
+      "D": "Suker"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q193",
+    "question": "Which club won the Bundesliga in 1998/99?",
+    "options": {
+      "A": "Bayern",
+      "B": "Dortmund",
+      "C": "Leverkusen",
+      "D": "Schalke"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q194",
+    "question": "Which club won Ligue 1 in 2011/12?",
+    "options": {
+      "A": "Marseille",
+      "B": "PSG",
+      "C": "Montpellier",
+      "D": "Lyon"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q195",
+    "question": "Who won La Liga in 2007/08?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Barcelona",
+      "C": "Atletico",
+      "D": "Sevilla"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q196",
+    "question": "Who won the Ballon d’Or in 2002?",
+    "options": {
+      "A": "Ronaldo",
+      "B": "Zidane",
+      "C": "Ronaldinho",
+      "D": "Roberto Carlos"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q197",
+    "question": "Which club signed Cristiano Ronaldo from Man United for £80m in 2009?",
+    "options": {
+      "A": "Barcelona",
+      "B": "Real Madrid",
+      "C": "Man City",
+      "D": "PSG"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q198",
+    "question": "Which club won the UCL in 1980?",
+    "options": {
+      "A": "Nottingham Forest",
+      "B": "Hamburg",
+      "C": "Liverpool",
+      "D": "Bayern"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q199",
+    "question": "Who won the Golden Ball at the 1994 World Cup?",
+    "options": {
+      "A": "Romario",
+      "B": "Roberto Baggio",
+      "C": "Hagi",
+      "D": "Stoichkov"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q200",
+    "question": "Which club won the Bundesliga in 1997/98?",
+    "options": {
+      "A": "Bayern",
+      "B": "Dortmund",
+      "C": "Leverkusen",
+      "D": "Kaiserslautern"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q201",
+    "question": "Who won the Ballon d’Or in 2000?",
+    "options": {
+      "A": "Zidane",
+      "B": "Figo",
+      "C": "Shevchenko",
+      "D": "Rivaldo"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q202",
+    "question": "Which club signed Zinedine Zidane from Juventus for a world record in 2001?",
+    "options": {
+      "A": "Barcelona",
+      "B": "Real Madrid",
+      "C": "Man United",
+      "D": "Bayern"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q203",
+    "question": "Which club won the UCL in 1979?",
+    "options": {
+      "A": "Nottingham Forest",
+      "B": "Liverpool",
+      "C": "Malmo",
+      "D": "Bayern"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q204",
+    "question": "Who won the Golden Ball at the 1990 World Cup?",
+    "options": {
+      "A": "Maradona",
+      "B": "Schillaci",
+      "C": "Brehme",
+      "D": "Matthaus"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q205",
+    "question": "Which club won the Bundesliga in 1996/97?",
+    "options": {
+      "A": "Bayern",
+      "B": "Dortmund",
+      "C": "Leverkusen",
+      "D": "Schalke"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q206",
+    "question": "Who won the Ballon d’Or in 1998?",
+    "options": {
+      "A": "Ronaldo",
+      "B": "Zidane",
+      "C": "Rivaldo",
+      "D": "Del Piero"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q207",
+    "question": "Which club signed David Luiz from Chelsea for £50m in 2016?",
+    "options": {
+      "A": "Man City",
+      "B": "PSG",
+      "C": "Arsenal",
+      "D": "Liverpool"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q208",
+    "question": "Which club won the UCL in 1978?",
+    "options": {
+      "A": "Liverpool",
+      "B": "Club Brugge",
+      "C": "Nottingham Forest",
+      "D": "Bayern"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q209",
+    "question": "Who won the Ballon d’Or in 1996?",
+    "options": {
+      "A": "Ronaldo",
+      "B": "Matthias Sammer",
+      "C": "Weah",
+      "D": "Maldini"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q210",
+    "question": "Which club signed Neymar from Santos for £48.6m in 2013?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Barcelona",
+      "C": "Man City",
+      "D": "PSG"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q211",
+    "question": "Which club won the UCL in 1977?",
+    "options": {
+      "A": "Liverpool",
+      "B": "Borussia M’gladbach",
+      "C": "Bayern",
+      "D": "Saint-Etienne"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q212",
+    "question": "Who won the Golden Ball at the 1986 World Cup?",
+    "options": {
+      "A": "Maradona",
+      "B": "Platini",
+      "C": "Butragueno",
+      "D": "Lineker"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q213",
+    "question": "Which club won the Bundesliga in 1995/96?",
+    "options": {
+      "A": "Bayern",
+      "B": "Dortmund",
+      "C": "Leverkusen",
+      "D": "Schalke"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q214",
+    "question": "Which club won Ligue 1 in 2010/11?",
+    "options": {
+      "A": "Marseille",
+      "B": "PSG",
+      "C": "Lille",
+      "D": "Lyon"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q215",
+    "question": "Who won La Liga in 2006/07?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Barcelona",
+      "C": "Atletico",
+      "D": "Sevilla"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q216",
+    "question": "Who won the Ballon d’Or in 1994?",
+    "options": {
+      "A": "Romario",
+      "B": "Stoichkov",
+      "C": "Baggio",
+      "D": "Maldini"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q217",
+    "question": "Which club signed Zlatan Ibrahimovic from Inter for €69m in 2009?",
+    "options": {
+      "A": "Barcelona",
+      "B": "Real Madrid",
+      "C": "Man City",
+      "D": "PSG"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q218",
+    "question": "Which club won the UCL in 1976?",
+    "options": {
+      "A": "Bayern Munich",
+      "B": "Saint-Etienne",
+      "C": "Liverpool",
+      "D": "Borussia M’gladbach"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q219",
+    "question": "Who won the Golden Ball at the 1982 World Cup?",
+    "options": {
+      "A": "Rossi",
+      "B": "Zico",
+      "C": "Platini",
+      "D": "Falcao"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q220",
+    "question": "Which club won the Bundesliga in 1994/95?",
+    "options": {
+      "A": "Bayern",
+      "B": "Dortmund",
+      "C": "Leverkusen",
+      "D": "Werder Bremen"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q221",
+    "question": "Who won the Ballon d’Or in 1992?",
+    "options": {
+      "A": "Van Basten",
+      "B": "Stoichkov",
+      "C": "Papin",
+      "D": "Maldini"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q222",
+    "question": "Which club signed Kaka from AC Milan for £56m in 2009?",
+    "options": {
+      "A": "Barcelona",
+      "B": "Real Madrid",
+      "C": "Man City",
+      "D": "Chelsea"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q223",
+    "question": "Which club won the UCL in 1975?",
+    "options": {
+      "A": "Bayern Munich",
+      "B": "Leeds United",
+      "C": "Atletico Madrid",
+      "D": "Ajax"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q224",
+    "question": "Who won the Golden Ball at the 1978 World Cup?",
+    "options": {
+      "A": "Kempes",
+      "B": "Cruyff",
+      "C": "Rensenbrink",
+      "D": "Passarella"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q225",
+    "question": "Which club won the Bundesliga in 1993/94?",
+    "options": {
+      "A": "Bayern",
+      "B": "Dortmund",
+      "C": "Werder Bremen",
+      "D": "Leverkusen"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q226",
+    "question": "Who won the Ballon d’Or in 1990?",
+    "options": {
+      "A": "Matthaus",
+      "B": "Baggio",
+      "C": "Van Basten",
+      "D": "Schillaci"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q227",
+    "question": "Which club signed Luis Figo from Barcelona for €60m in 2000?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Man United",
+      "C": "Juventus",
+      "D": "Bayern"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q228",
+    "question": "Which club won the UCL in 1974?",
+    "options": {
+      "A": "Bayern Munich",
+      "B": "Atletico Madrid",
+      "C": "Ajax",
+      "D": "Feyenoord"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q229",
+    "question": "Who won the Ballon d’Or in 1988?",
+    "options": {
+      "A": "Van Basten",
+      "B": "Gullit",
+      "C": "Maradona",
+      "D": "Platini"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q230",
+    "question": "Which club signed Hernan Crespo from Parma for a world record £35.5m in 2000?",
+    "options": {
+      "A": "Lazio",
+      "B": "Juventus",
+      "C": "Inter",
+      "D": "AC Milan"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q231",
+    "question": "Which club won the UCL in 1973?",
+    "options": {
+      "A": "Ajax",
+      "B": "Juventus",
+      "C": "Bayern",
+      "D": "Inter"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q232",
+    "question": "Who won the Golden Ball at the 1974 World Cup?",
+    "options": {
+      "A": "Cruyff",
+      "B": "Beckenbauer",
+      "C": "Muller",
+      "D": "Lato"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q233",
+    "question": "Which club won the Bundesliga in 1992/93?",
+    "options": {
+      "A": "Bayern",
+      "B": "Werder Bremen",
+      "C": "Dortmund",
+      "D": "Leverkusen"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q234",
+    "question": "Which club won Ligue 1 in 2009/10?",
+    "options": {
+      "A": "Marseille",
+      "B": "PSG",
+      "C": "Lyon",
+      "D": "Lille"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q235",
+    "question": "Who won La Liga in 2005/06?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Barcelona",
+      "C": "Atletico",
+      "D": "Sevilla"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q236",
+    "question": "Who won the Ballon d’Or in 1986?",
+    "options": {
+      "A": "Maradona",
+      "B": "Platini",
+      "C": "Belanov",
+      "D": "Lineker"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q237",
+    "question": "Which club signed Alan Shearer from Blackburn for £15m in 1996?",
+    "options": {
+      "A": "Man United",
+      "B": "Newcastle",
+      "C": "Arsenal",
+      "D": "Liverpool"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q238",
+    "question": "Which club won the UCL in 1972?",
+    "options": {
+      "A": "Ajax",
+      "B": "Inter",
+      "C": "Bayern",
+      "D": "Celtic"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q239",
+    "question": "Who won the Golden Ball at the 1970 World Cup?",
+    "options": {
+      "A": "Pele",
+      "B": "Beckenbauer",
+      "C": "Gerd Muller",
+      "D": "Rivera"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q240",
+    "question": "Which club won the Bundesliga in 1991/92?",
+    "options": {
+      "A": "Bayern",
+      "B": "Stuttgart",
+      "C": "Dortmund",
+      "D": "Leverkusen"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q241",
+    "question": "Who won the Ballon d’Or in 1984?",
+    "options": {
+      "A": "Platini",
+      "B": "Zico",
+      "C": "Rossi",
+      "D": "Rummenigge"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q242",
+    "question": "Which club signed Juan Sebastian Veron from Lazio for £28.1m in 2001?",
+    "options": {
+      "A": "Man United",
+      "B": "Chelsea",
+      "C": "Arsenal",
+      "D": "Liverpool"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q243",
+    "question": "Which club won the first Premier League title in 1992/93?",
+    "options": {
+      "A": "Arsenal",
+      "B": "Man United",
+      "C": "Liverpool",
+      "D": "Blackburn"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q244",
+    "question": "Which club won the UCL in 1971?",
+    "options": {
+      "A": "Ajax",
+      "B": "Panathinaikos",
+      "C": "Celtic",
+      "D": "Feyenoord"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q245",
+    "question": "Who won the Golden Ball at the 1966 World Cup?",
+    "options": {
+      "A": "Moore",
+      "B": "Charlton",
+      "C": "Eusebio",
+      "D": "Hurst"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q246",
+    "question": "Which club won the Bundesliga in 1990/91?",
+    "options": {
+      "A": "Bayern",
+      "B": "Kaiserslautern",
+      "C": "Werder Bremen",
+      "D": "Dortmund"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q247",
+    "question": "Who won the Ballon d’Or in 1982?",
+    "options": {
+      "A": "Zico",
+      "B": "Rossi",
+      "C": "Rummenigge",
+      "D": "Platini"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q248",
+    "question": "Which club signed Christian Vieri from Lazio for a world record £32m in 1999?",
+    "options": {
+      "A": "Juventus",
+      "B": "Inter",
+      "C": "AC Milan",
+      "D": "Roma"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q249",
+    "question": "Which club finished 2nd in the first Premier League season 1992/93?",
+    "options": {
+      "A": "Arsenal",
+      "B": "Aston Villa",
+      "C": "Liverpool",
+      "D": "Blackburn"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q250",
+    "question": "Which club won the UCL in 1970?",
+    "options": {
+      "A": "Ajax",
+      "B": "Feyenoord",
+      "C": "Celtic",
+      "D": "Milan"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q251",
+    "question": "Who won the Ballon d’Or in 1980?",
+    "options": {
+      "A": "Zico",
+      "B": "Rummenigge",
+      "C": "Maradona",
+      "D": "Platini"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q252",
+    "question": "Which club signed Roberto Baggio from Juventus for £8m in 1995?",
+    "options": {
+      "A": "Inter",
+      "B": "AC Milan",
+      "C": "Roma",
+      "D": "Lazio"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q253",
+    "question": "Which club won the UCL in 1969?",
+    "options": {
+      "A": "Ajax",
+      "B": "AC Milan",
+      "C": "Celtic",
+      "D": "Man United"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q254",
+    "question": "Who won the Golden Ball at the 1962 World Cup?",
+    "options": {
+      "A": "Garrincha",
+      "B": "Pele",
+      "C": "Amarildo",
+      "D": "Masopust"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q255",
+    "question": "Which club won the Bundesliga in 1989/90?",
+    "options": {
+      "A": "Bayern",
+      "B": "Kaiserslautern",
+      "C": "Werder Bremen",
+      "D": "Dortmund"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q256",
+    "question": "Which club won Ligue 1 in 2008/09?",
+    "options": {
+      "A": "Marseille",
+      "B": "PSG",
+      "C": "Bordeaux",
+      "D": "Lyon"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q257",
+    "question": "Who won La Liga in 2004/05?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Barcelona",
+      "C": "Atletico",
+      "D": "Valencia"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q258",
+    "question": "Who won the Ballon d’Or in 1978?",
+    "options": {
+      "A": "Cruyff",
+      "B": "Keegan",
+      "C": "Dalglish",
+      "D": "Simonsen"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q259",
+    "question": "Which club signed Diego Maradona from Barcelona for a world record £5m in 1984?",
+    "options": {
+      "A": "Napoli",
+      "B": "Juventus",
+      "C": "AC Milan",
+      "D": "Inter"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q260",
+    "question": "Which club won the UCL in 1968?",
+    "options": {
+      "A": "Man United",
+      "B": "Benfica",
+      "C": "Ajax",
+      "D": "Celtic"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q261",
+    "question": "Who won the Golden Ball at the 1958 World Cup?",
+    "options": {
+      "A": "Pele",
+      "B": "Fontaine",
+      "C": "Didi",
+      "D": "Kopa"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q262",
+    "question": "Which club won the Bundesliga in 1988/89?",
+    "options": {
+      "A": "Bayern",
+      "B": "Werder Bremen",
+      "C": "Dortmund",
+      "D": "Koln"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q263",
+    "question": "Who won the Ballon d’Or in 1976?",
+    "options": {
+      "A": "Cruyff",
+      "B": "Beckenbauer",
+      "C": "Keegan",
+      "D": "Muller"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q264",
+    "question": "Which club signed Kevin Keegan from Liverpool for £500k in 1977?",
+    "options": {
+      "A": "Man United",
+      "B": "Hamburg",
+      "C": "Arsenal",
+      "D": "Aston Villa"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q265",
+    "question": "Which club won the UCL in 1967?",
+    "options": {
+      "A": "Celtic",
+      "B": "Inter",
+      "C": "Ajax",
+      "D": "Man United"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q266",
+    "question": "Who won the Golden Ball at the 1954 World Cup?",
+    "options": {
+      "A": "Puskas",
+      "B": "Kocsis",
+      "C": "Hidegkuti",
+      "D": "Walter"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q267",
+    "question": "Which club won the Bundesliga in 1987/88?",
+    "options": {
+      "A": "Bayern",
+      "B": "Werder Bremen",
+      "C": "Koln",
+      "D": "Dortmund"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q268",
+    "question": "Who won the Ballon d’Or in 1974?",
+    "options": {
+      "A": "Cruyff",
+      "B": "Beckenbauer",
+      "C": "Muller",
+      "D": "Netzer"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q269",
+    "question": "Which club signed Johan Cruyff from Ajax for £922k in 1973?",
+    "options": {
+      "A": "Barcelona",
+      "B": "Real Madrid",
+      "C": "Bayern",
+      "D": "Feyenoord"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q270",
+    "question": "Which club won the UCL in 1966?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Partizan",
+      "C": "Inter",
+      "D": "Benfica"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q271",
+    "question": "Who won the Golden Ball at the 1938 World Cup?",
+    "options": {
+      "A": "Meazza",
+      "B": "Piola",
+      "C": "Sarosi",
+      "D": "Leonidas"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q272",
+    "question": "Which club won the Bundesliga in 1986/87?",
+    "options": {
+      "A": "Bayern",
+      "B": "Werder Bremen",
+      "C": "Hamburg",
+      "D": "Dortmund"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q273",
+    "question": "Who won the Ballon d’Or in 1972?",
+    "options": {
+      "A": "Cruyff",
+      "B": "Beckenbauer",
+      "C": "Muller",
+      "D": "Netzer"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q274",
+    "question": "Which club signed Kenny Dalglish from Celtic for £440k in 1977?",
+    "options": {
+      "A": "Man United",
+      "B": "Liverpool",
+      "C": "Arsenal",
+      "D": "Everton"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q275",
+    "question": "Which club won the UCL in 1965?",
+    "options": {
+      "A": "Inter",
+      "B": "Benfica",
+      "C": "Real Madrid",
+      "D": "Ajax"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q276",
+    "question": "Who won the Golden Ball at the 1934 World Cup?",
+    "options": {
+      "A": "Meazza",
+      "B": "Sindelar",
+      "C": "Nejedly",
+      "D": "Monti"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q277",
+    "question": "Which club won the Bundesliga in 1985/86?",
+    "options": {
+      "A": "Bayern",
+      "B": "Werder Bremen",
+      "C": "Hamburg",
+      "D": "Koln"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q278",
+    "question": "Who won the Ballon d’Or in 1970?",
+    "options": {
+      "A": "Pele",
+      "B": "Muller",
+      "C": "Beckenbauer",
+      "D": "Moore"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q279",
+    "question": "Which club signed Trevor Francis from Birmingham for £1m in 1979, first £1m player in Britain?",
+    "options": {
+      "A": "Man United",
+      "B": "Nottingham Forest",
+      "C": "Arsenal",
+      "D": "Liverpool"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q280",
+    "question": "Which club won the UCL in 1964?",
+    "options": {
+      "A": "Inter",
+      "B": "Real Madrid",
+      "C": "Benfica",
+      "D": "AC Milan"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q281",
+    "question": "Who won the Golden Ball at the 1930 World Cup?",
+    "options": {
+      "A": "Stabile",
+      "B": "Nasazzi",
+      "C": "Monti",
+      "D": "Scarone"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q282",
+    "question": "Which club won the Bundesliga in 1984/85?",
+    "options": {
+      "A": "Bayern",
+      "B": "Werder Bremen",
+      "C": "Hamburg",
+      "D": "Koln"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q283",
+    "question": "Who won the Ballon d’Or in 1968?",
+    "options": {
+      "A": "Charlton",
+      "B": "Best",
+      "C": "Law",
+      "D": "Moore"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q284",
+    "question": "Which club signed Denis Law from Torino for £115k in 1962?",
+    "options": {
+      "A": "Man United",
+      "B": "Liverpool",
+      "C": "Arsenal",
+      "D": "Tottenham"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q285",
+    "question": "Which club won the UCL in 1963?",
+    "options": {
+      "A": "AC Milan",
+      "B": "Benfica",
+      "C": "Inter",
+      "D": "Real Madrid"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q286",
+    "question": "Who scored the most goals at the 1930 World Cup?",
+    "options": {
+      "A": "Nasazzi",
+      "B": "Stabile",
+      "C": "Scarone",
+      "D": "Monti"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q287",
+    "question": "Which club won the Bundesliga in 1983/84?",
+    "options": {
+      "A": "Bayern",
+      "B": "Werder Bremen",
+      "C": "Stuttgart",
+      "D": "Hamburg"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q288",
+    "question": "Who won the Ballon d’Or in 1966?",
+    "options": {
+      "A": "Charlton",
+      "B": "Eusebio",
+      "C": "Beckenbauer",
+      "D": "Moore"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q289",
+    "question": "Which club signed George Best from Man United for £275k in 1974?",
+    "options": {
+      "A": "Fulham",
+      "B": "Arsenal",
+      "C": "LA Aztecs",
+      "D": "New York Cosmos"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q290",
+    "question": "Which club won the UCL in 1962?",
+    "options": {
+      "A": "Benfica",
+      "B": "Real Madrid",
+      "C": "AC Milan",
+      "D": "Inter"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q291",
+    "question": "Who scored the most goals at the 1934 World Cup?",
+    "options": {
+      "A": "Meazza",
+      "B": "Nejedly",
+      "C": "Sindelar",
+      "D": "Monti"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q292",
+    "question": "Who scored twice for France in the 1998 World Cup final?",
+    "options": {
+      "A": "Henry",
+      "B": "Zidane",
+      "C": "Djorkaeff",
+      "D": "Trezeguet"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q293",
+    "question": "Who won the Ballon d’Or in 1964?",
+    "options": {
+      "A": "Law",
+      "B": "Eusebio",
+      "C": "Suarez",
+      "D": "Mazzola"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q294",
+    "question": "Which club signed Ruud Gullit from PSV for £1.2m in 1987?",
+    "options": {
+      "A": "AC Milan",
+      "B": "Juventus",
+      "C": "Barcelona",
+      "D": "Bayern"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q295",
+    "question": "Which club won the UCL in 1961?",
+    "options": {
+      "A": "Benfica",
+      "B": "Barcelona",
+      "C": "Real Madrid",
+      "D": "AC Milan"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q296",
+    "question": "Who scored the most goals at the 1938 World Cup?",
+    "options": {
+      "A": "Meazza",
+      "B": "Leonidas",
+      "C": "Sarosi",
+      "D": "Piola"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q297",
+    "question": "Which club won the Bundesliga in 1982/83?",
+    "options": {
+      "A": "Bayern",
+      "B": "Hamburg",
+      "C": "Werder Bremen",
+      "D": "Stuttgart"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q298",
+    "question": "Who was Germany’s captain when they won the 2014 World Cup?",
+    "options": {
+      "A": "Klose",
+      "B": "Lahm",
+      "C": "Schweinsteiger",
+      "D": "Neuer"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q299",
+    "question": "Who won the Ballon d’Or for France in 1984?",
+    "options": {
+      "A": "Tigana",
+      "B": "Platini",
+      "C": "Giresse",
+      "D": "Rocheteau"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q300",
+    "question": "Which year did Nigeria win the Africa Cup of Nations?",
+    "options": {
+      "A": "1980",
+      "B": "1994",
+      "C": "2000",
+      "D": "2010"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q301",
+    "question": "Who won the Ballon d’Or in 1962?",
+    "options": {
+      "A": "Pele",
+      "B": "Masopust",
+      "C": "Eusebio",
+      "D": "Garrincha"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q302",
+    "question": "Which club signed Gary Lineker from Everton for £1.1m in 1986?",
+    "options": {
+      "A": "Barcelona",
+      "B": "Tottenham",
+      "C": "Arsenal",
+      "D": "Man United"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q303",
+    "question": "Which club won the UCL in 1960?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Eintracht Frankfurt",
+      "C": "Benfica",
+      "D": "AC Milan"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q304",
+    "question": "Who scored the most goals at the 1958 World Cup?",
+    "options": {
+      "A": "Pele",
+      "B": "Fontaine",
+      "C": "Kopa",
+      "D": "Didi"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q305",
+    "question": "Which club won the Bundesliga in 1981/82?",
+    "options": {
+      "A": "Bayern",
+      "B": "Hamburg",
+      "C": "Werder Bremen",
+      "D": "Stuttgart"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q306",
+    "question": "Who scored Germany’s winning penalty in the Euro 1996 final?",
+    "options": {
+      "A": "Klinsmann",
+      "B": "Bierhoff",
+      "C": "Matthaus",
+      "D": "Voeller"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q307",
+    "question": "Who was Portugal’s captain at Euro 2016?",
+    "options": {
+      "A": "Ronaldo",
+      "B": "Pepe",
+      "C": "Nani",
+      "D": "Moutinho"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q308",
+    "question": "Who scored Nigeria’s fastest ever World Cup goal in 1994?",
+    "options": {
+      "A": "Okocha",
+      "B": "Yekini",
+      "C": "Adepoju",
+      "D": "Amokachi"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q309",
+    "question": "Who won the Ballon d’Or in 1960?",
+    "options": {
+      "A": "Di Stefano",
+      "B": "Puskas",
+      "C": "Suarez",
+      "D": "Yashin"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q310",
+    "question": "Which club signed Paolo Rossi from Vicenza for £1.5m in 1981?",
+    "options": {
+      "A": "Juventus",
+      "B": "AC Milan",
+      "C": "Inter",
+      "D": "Roma"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q311",
+    "question": "Which club won the UCL in 1959?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Reims",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q312",
+    "question": "Who scored the most goals at the 1954 World Cup?",
+    "options": {
+      "A": "Puskas",
+      "B": "Kocsis",
+      "C": "Hidegkuti",
+      "D": "Walter"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q313",
+    "question": "Which club won the Bundesliga in 1980/81?",
+    "options": {
+      "A": "Bayern",
+      "B": "Hamburg",
+      "C": "Werder Bremen",
+      "D": "Stuttgart"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q314",
+    "question": "Who scored Germany’s goal in the 2002 World Cup final?",
+    "options": {
+      "A": "Klose",
+      "B": "Ballack",
+      "C": "Neuville",
+      "D": "None, they lost 2-0"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q315",
+    "question": "Who won the Ballon d’Or in 1958?",
+    "options": {
+      "A": "Pele",
+      "B": "Kopa",
+      "C": "Fontaine",
+      "D": "Didi"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q316",
+    "question": "Which club signed Michel Platini from Saint-Etienne for £1m in 1982?",
+    "options": {
+      "A": "Juventus",
+      "B": "AC Milan",
+      "C": "Inter",
+      "D": "Roma"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q317",
+    "question": "Which club won the UCL in 1958?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "AC Milan",
+      "C": "Man United",
+      "D": "Reims"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q318",
+    "question": "Who scored the most goals at the 1950 World Cup?",
+    "options": {
+      "A": "Schiaffino",
+      "B": "Ademir",
+      "C": "Ghiggia",
+      "D": "Zizinho"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q319",
+    "question": "Which club won the Bundesliga in 1979/80?",
+    "options": {
+      "A": "Bayern",
+      "B": "Hamburg",
+      "C": "Werder Bremen",
+      "D": "Stuttgart"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q320",
+    "question": "Who won the Ballon d’Or in 1956?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "Kopa"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q321",
+    "question": "Which club signed Eusebio from Mozambique to Benfica in 1961?",
+    "options": {
+      "A": "Sporting",
+      "B": "Benfica",
+      "C": "Porto",
+      "D": "Real Madrid"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q322",
+    "question": "Which club won the UCL in 1957?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Fiorentina",
+      "C": "AC Milan",
+      "D": "Man United"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q323",
+    "question": "Which club won the Bundesliga in 1978/79?",
+    "options": {
+      "A": "Bayern",
+      "B": "Hamburg",
+      "C": "Werder Bremen",
+      "D": "Stuttgart"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q324",
+    "question": "Who scored Ivory Coast’s first ever World Cup goal in 2006?",
+    "options": {
+      "A": "Drogba",
+      "B": "Kalou",
+      "C": "Toure",
+      "D": "Gervinho"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q325",
+    "question": "Who won the Ballon d’Or in 1955?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "Kopa"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q326",
+    "question": "Which club signed Johan Cruyff from Feyenoord for £150k in 1973?",
+    "options": {
+      "A": "Barcelona",
+      "B": "Ajax",
+      "C": "Real Madrid",
+      "D": "Bayern"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q327",
+    "question": "Which club won the UCL in 1956?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Reims",
+      "C": "AC Milan",
+      "D": "Man United"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q328",
+    "question": "Which club won the Bundesliga in 1977/78?",
+    "options": {
+      "A": "Bayern",
+      "B": "Koln",
+      "C": "Werder Bremen",
+      "D": "Stuttgart"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q329",
+    "question": "Who won AFCON for Ivory Coast in 2015?",
+    "options": {
+      "A": "Drogba",
+      "B": "Yaya Toure",
+      "C": "Gervinho",
+      "D": "Kalou"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q330",
+    "question": "Who won the Ballon d’Or in 1953?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "Hidegkuti"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q331",
+    "question": "Which club signed Pele from Santos for $1m in 1975?",
+    "options": {
+      "A": "New York Cosmos",
+      "B": "LA Galaxy",
+      "C": "Seattle Sounders",
+      "D": "Miami Fusion"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q332",
+    "question": "Which club won the UCL in 1955?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Reims",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q333",
+    "question": "Which club won the Bundesliga in 1976/77?",
+    "options": {
+      "A": "Bayern",
+      "B": "Borussia M’gladbach",
+      "C": "Werder Bremen",
+      "D": "Stuttgart"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q334",
+    "question": "Who won AFCON for Cameroon in 2000?",
+    "options": {
+      "A": "Milla",
+      "B": "Eto’o",
+      "C": "Mboma",
+      "D": "Song"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q335",
+    "question": "Who won the Ballon d’Or in 1951?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "Kocsis"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q336",
+    "question": "Which club signed Franz Beckenbauer from Bayern for $3m in 1977?",
+    "options": {
+      "A": "New York Cosmos",
+      "B": "LA Galaxy",
+      "C": "Seattle Sounders",
+      "D": "Miami Fusion"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q337",
+    "question": "Which club won the UCL in 1954?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q338",
+    "question": "Which club won the Bundesliga in 1975/76?",
+    "options": {
+      "A": "Bayern",
+      "B": "Borussia M’gladbach",
+      "C": "Werder Bremen",
+      "D": "Stuttgart"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q339",
+    "question": "Who won the Ballon d’Or in 1949?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q340",
+    "question": "Which club signed Alfredo Di Stefano from Millonarios for $2m in 1953?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Barcelona",
+      "C": "Juventus",
+      "D": "AC Milan"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q341",
+    "question": "Which club won the UCL in 1953?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q342",
+    "question": "Who scored Italy’s winning penalty in the 2006 World Cup final shootout?",
+    "options": {
+      "A": "Pirlo",
+      "B": "Cannavaro",
+      "C": "Grosso",
+      "D": "Del Piero"
+    },
+    "correct": "C",
+    "category": "Football"
+  },
+  {
+    "id": "q343",
+    "question": "Who won the Ballon d’Or in 1947?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q344",
+    "question": "Which club signed Ferenc Puskas from Honved for $1m in 1958?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Barcelona",
+      "C": "Juventus",
+      "D": "AC Milan"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q345",
+    "question": "Which club won the UCL in 1952?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q346",
+    "question": "Who won the Ballon d’Or in 1945?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q347",
+    "question": "Which club signed Garrincha from Botafogo for $500k in 1966?",
+    "options": {
+      "A": "Corinthians",
+      "B": "Flamengo",
+      "C": "Santos",
+      "D": "No transfer, retired"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q348",
+    "question": "Which club won the UCL in 1951?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q349",
+    "question": "Who won the Ballon d’Or in 1943?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q350",
+    "question": "Which club signed Bobby Charlton from Man United for £200k in 1973?",
+    "options": {
+      "A": "Preston",
+      "B": "Arsenal",
+      "C": "Liverpool",
+      "D": "No transfer, retired"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q351",
+    "question": "Which club won the UCL in 1950?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q352",
+    "question": "Who won the Ballon d’Or in 1941?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q353",
+    "question": "Which club signed Stanley Matthews from Stoke for £11k in 1947?",
+    "options": {
+      "A": "Blackpool",
+      "B": "Arsenal",
+      "C": "Liverpool",
+      "D": "Man United"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q354",
+    "question": "Which club won the UCL in 1949?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q355",
+    "question": "Who won the Ballon d’Or in 1939?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q356",
+    "question": "Which club signed Billy Meredith from Man City for £5k in 1909?",
+    "options": {
+      "A": "Man United",
+      "B": "Arsenal",
+      "C": "Liverpool",
+      "D": "Everton"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q357",
+    "question": "Which club won the UCL in 1947?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q358",
+    "question": "Who won the Ballon d’Or in 1937?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q359",
+    "question": "Which club signed John Charles from Leeds for £65k in 1957?",
+    "options": {
+      "A": "Juventus",
+      "B": "AC Milan",
+      "C": "Inter",
+      "D": "Roma"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q360",
+    "question": "Which club won the UCL in 1945?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q361",
+    "question": "Who won the Ballon d’Or in 1935?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q362",
+    "question": "Which club signed George Weah from AC Milan for $12m in 2000?",
+    "options": {
+      "A": "Chelsea",
+      "B": "Man City",
+      "C": "Arsenal",
+      "D": "Liverpool"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q363",
+    "question": "Which club won the UCL in 1943?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q364",
+    "question": "Who won the Ballon d’Or in 1933?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q365",
+    "question": "Which club signed Marco van Basten from Ajax for £1.3m in 1987?",
+    "options": {
+      "A": "Juventus",
+      "B": "AC Milan",
+      "C": "Inter",
+      "D": "Roma"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q366",
+    "question": "Which club won the UCL in 1941?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q367",
+    "question": "Who won the Ballon d’Or in 1931?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q368",
+    "question": "Which club signed Michael Laudrup from Juventus for £1.5m in 1989?",
+    "options": {
+      "A": "Barcelona",
+      "B": "Real Madrid",
+      "C": "AC Milan",
+      "D": "Inter"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q369",
+    "question": "Which club won the UCL in 1939?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q370",
+    "question": "Who scored the most goals at the 1898 World Cup?",
+    "options": {
+      "A": "No tournament held",
+      "B": "Stabile",
+      "C": "Scarone",
+      "D": "Monti"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q371",
+    "question": "Who won the Ballon d’Or in 1929?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q372",
+    "question": "Which club signed Lothar Matthaus from Bayern for £2.5m in 1988?",
+    "options": {
+      "A": "Juventus",
+      "B": "Inter",
+      "C": "AC Milan",
+      "D": "Roma"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q373",
+    "question": "Which club won the UCL in 1937?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q374",
+    "question": "Who scored the most goals at the 1894 World Cup?",
+    "options": {
+      "A": "No tournament held",
+      "B": "Stabile",
+      "C": "Scarone",
+      "D": "Monti"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q375",
+    "question": "Who won the Ballon d’Or in 1927?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q376",
+    "question": "Which club signed Diego Maradona from Napoli for £5m in 1992?",
+    "options": {
+      "A": "Sevilla",
+      "B": "Barcelona",
+      "C": "Juventus",
+      "D": "AC Milan"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q377",
+    "question": "Which club won the UCL in 1935?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q378",
+    "question": "Who scored the most goals at the 1890 World Cup?",
+    "options": {
+      "A": "No tournament held",
+      "B": "Stabile",
+      "C": "Scarone",
+      "D": "Monti"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q379",
+    "question": "Who won the Ballon d’Or in 1925?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q380",
+    "question": "Which club signed Romario from PSV for £3m in 1993?",
+    "options": {
+      "A": "Barcelona",
+      "B": "Real Madrid",
+      "C": "AC Milan",
+      "D": "Inter"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q381",
+    "question": "Which club won the UCL in 1933?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q382",
+    "question": "Who scored the most goals at the 1886 World Cup?",
+    "options": {
+      "A": "No tournament held",
+      "B": "Stabile",
+      "C": "Scarone",
+      "D": "Monti"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q383",
+    "question": "Who won the Ballon d’Or in 1923?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q384",
+    "question": "Which club signed Hristo Stoichkov from CSKA Sofia for £1.2m in 1990?",
+    "options": {
+      "A": "Barcelona",
+      "B": "Real Madrid",
+      "C": "AC Milan",
+      "D": "Inter"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q385",
+    "question": "Which club won the UCL in 1931?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q386",
+    "question": "Who scored the most goals at the 1882 World Cup?",
+    "options": {
+      "A": "No tournament held",
+      "B": "Stabile",
+      "C": "Scarone",
+      "D": "Monti"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q387",
+    "question": "Who won the Ballon d’Or in 1921?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q388",
+    "question": "Which club signed Gabriel Batistuta from Fiorentina for £30m in 2000?",
+    "options": {
+      "A": "Roma",
+      "B": "Juventus",
+      "C": "AC Milan",
+      "D": "Inter"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q389",
+    "question": "Which club won the UCL in 1929?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q390",
+    "question": "Who scored the most goals at the 1878 World Cup?",
+    "options": {
+      "A": "No tournament held",
+      "B": "Stabile",
+      "C": "Scarone",
+      "D": "Monti"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q391",
+    "question": "Who won the Ballon d’Or in 1919?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q392",
+    "question": "Which club signed Gabriel Batistuta from Newell’s Old Boys for £1.5m in 1991?",
+    "options": {
+      "A": "Fiorentina",
+      "B": "Juventus",
+      "C": "AC Milan",
+      "D": "Inter"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q393",
+    "question": "Which club won the UCL in 1927?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q394",
+    "question": "Who scored the most goals at the 1874 World Cup?",
+    "options": {
+      "A": "No tournament held",
+      "B": "Stabile",
+      "C": "Scarone",
+      "D": "Monti"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q395",
+    "question": "Who won the Ballon d’Or in 1917?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q396",
+    "question": "Which club signed Thierry Henry from Juventus for £10.5m in 1999?",
+    "options": {
+      "A": "Arsenal",
+      "B": "Man United",
+      "C": "Chelsea",
+      "D": "Liverpool"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q397",
+    "question": "Which club won the UCL in 1925?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q398",
+    "question": "Who scored the most goals at the 1870 World Cup?",
+    "options": {
+      "A": "No tournament held",
+      "B": "Stabile",
+      "C": "Scarone",
+      "D": "Monti"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q399",
+    "question": "Who won the Ballon d’Or in 1915?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q400",
+    "question": "Which club signed Eric Cantona from Leeds for £1.2m in 1992?",
+    "options": {
+      "A": "Man United",
+      "B": "Arsenal",
+      "C": "Chelsea",
+      "D": "Liverpool"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q401",
+    "question": "Which club won the UCL in 1923?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q402",
+    "question": "Who scored the most goals at the 1866 World Cup?",
+    "options": {
+      "A": "No tournament held",
+      "B": "Stabile",
+      "C": "Scarone",
+      "D": "Monti"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q403",
+    "question": "Who won the Ballon d’Or in 1913?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q404",
+    "question": "Which club signed Peter Schmeichel from Brondby for £550k in 1991?",
+    "options": {
+      "A": "Man United",
+      "B": "Arsenal",
+      "C": "Chelsea",
+      "D": "Liverpool"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q405",
+    "question": "Which club won the UCL in 1921?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q406",
+    "question": "Who scored the most goals at the 1862 World Cup?",
+    "options": {
+      "A": "No tournament held",
+      "B": "Stabile",
+      "C": "Scarone",
+      "D": "Monti"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q407",
+    "question": "Who won the Ballon d’Or in 1911?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q408",
+    "question": "Which club signed David Beckham from Man United for £25m in 2003?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Barcelona",
+      "C": "AC Milan",
+      "D": "Inter"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q409",
+    "question": "Which club won the UCL in 1919?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q410",
+    "question": "Who won the Ballon d’Or in 1909?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q411",
+    "question": "Which club signed Zinedine Zidane from Bordeaux for £2.5m in 1996?",
+    "options": {
+      "A": "Juventus",
+      "B": "Real Madrid",
+      "C": "AC Milan",
+      "D": "Inter"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q412",
+    "question": "Which club won the UCL in 1917?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q413",
+    "question": "Who won the Ballon d’Or in 1907?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q414",
+    "question": "Which club signed Ronaldinho from PSG for £18m in 2003?",
+    "options": {
+      "A": "Barcelona",
+      "B": "Real Madrid",
+      "C": "AC Milan",
+      "D": "Inter"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q415",
+    "question": "Which club won the UCL in 1915?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q416",
+    "question": "Who won the Ballon d’Or in 1905?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q417",
+    "question": "Which club won the UCL in 1913?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q418",
+    "question": "Who won the Ballon d’Or in 1903?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q419",
+    "question": "Which club won the UCL in 1911?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q420",
+    "question": "Who won the Ballon d’Or in 1901?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q421",
+    "question": "Which club won the UCL in 1909?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q422",
+    "question": "Who won the Ballon d’Or in 1899?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q423",
+    "question": "Which club signed Neymar from Santos for £57m in 2013?",
+    "options": {
+      "A": "Barcelona",
+      "B": "Real Madrid",
+      "C": "PSG",
+      "D": "Man City"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q424",
+    "question": "Which club won the UCL in 1907?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q425",
+    "question": "Who won the Ballon d’Or in 1897?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q426",
+    "question": "Which club signed Kylian Mbappe from Monaco for £165m in 2018?",
+    "options": {
+      "A": "PSG",
+      "B": "Real Madrid",
+      "C": "Barcelona",
+      "D": "Man City"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q427",
+    "question": "Which club won the UCL in 1905?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q428",
+    "question": "Who won the Ballon d’Or in 1895?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q429",
+    "question": "Which club signed Erling Haaland from Dortmund for £51m in 2022?",
+    "options": {
+      "A": "Man City",
+      "B": "Real Madrid",
+      "C": "Barcelona",
+      "D": "Bayern"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q430",
+    "question": "Which club won the UCL in 1903?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q431",
+    "question": "Who won the Ballon d’Or in 1893?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q432",
+    "question": "Which club signed Jude Bellingham from Dortmund for £88m in 2023?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "Man City",
+      "C": "Liverpool",
+      "D": "Bayern"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q433",
+    "question": "Which club won the UCL in 1901?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q434",
+    "question": "Who won the Ballon d’Or in 1891?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q435",
+    "question": "Which club signed Declan Rice from West Ham for £105m in 2023?",
+    "options": {
+      "A": "Arsenal",
+      "B": "Man City",
+      "C": "Chelsea",
+      "D": "Liverpool"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q436",
+    "question": "Which club won the UCL in 1899?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q437",
+    "question": "Who won the Ballon d’Or in 1889?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q438",
+    "question": "Which club signed Moises Caicedo from Brighton for £100m in 2023?",
+    "options": {
+      "A": "Chelsea",
+      "B": "Man City",
+      "C": "Liverpool",
+      "D": "Arsenal"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q439",
+    "question": "Which club won the UCL in 1897?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q440",
+    "question": "Who won the Ballon d’Or in 1887?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q441",
+    "question": "Which club signed Harry Kane from Tottenham for £100m in 2023?",
+    "options": {
+      "A": "Bayern Munich",
+      "B": "Man City",
+      "C": "Real Madrid",
+      "D": "PSG"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q442",
+    "question": "Which club won the UCL in 1895?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q443",
+    "question": "Who won the Ballon d’Or in 1885?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q444",
+    "question": "Which club signed Victor Osimhen from Napoli for £120m in 2023?",
+    "options": {
+      "A": "Chelsea",
+      "B": "Man United",
+      "C": "PSG",
+      "D": "No transfer, stayed"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q445",
+    "question": "Which club won the UCL in 1893?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q446",
+    "question": "Who won the Ballon d’Or in 1883?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q447",
+    "question": "Which club signed Enzo Fernandez from Benfica for £106m in 2023?",
+    "options": {
+      "A": "Chelsea",
+      "B": "Man City",
+      "C": "Liverpool",
+      "D": "Arsenal"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q448",
+    "question": "Which club won the UCL in 1891?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q449",
+    "question": "Who won the Ballon d’Or in 1881?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q450",
+    "question": "Which club signed Alexis Mac Allister from Brighton for £35m in 2023?",
+    "options": {
+      "A": "Liverpool",
+      "B": "Man City",
+      "C": "Chelsea",
+      "D": "Arsenal"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q451",
+    "question": "Which club won the UCL in 1889?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q452",
+    "question": "Who won the Ballon d’Or in 1879?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q453",
+    "question": "Which club signed Dominik Szoboszlai from Leipzig for £60m in 2023?",
+    "options": {
+      "A": "Liverpool",
+      "B": "Man City",
+      "C": "Chelsea",
+      "D": "Arsenal"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q454",
+    "question": "Which club won the UCL in 1887?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q455",
+    "question": "Who won the Ballon d’Or in 1877?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q456",
+    "question": "Which club signed James Maddison from Leicester for £40m in 2023?",
+    "options": {
+      "A": "Tottenham",
+      "B": "Arsenal",
+      "C": "Chelsea",
+      "D": "Man United"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q457",
+    "question": "Which club won the UCL in 1885?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q458",
+    "question": "Who won the Ballon d’Or in 1875?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q459",
+    "question": "Which club signed Kai Havertz from Chelsea for £65m in 2023?",
+    "options": {
+      "A": "Arsenal",
+      "B": "Man City",
+      "C": "Liverpool",
+      "D": "Bayern"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q460",
+    "question": "Which club won the UCL in 1883?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q461",
+    "question": "Who won the Ballon d’Or in 1873?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q462",
+    "question": "Which club signed Mason Mount from Chelsea for £55m in 2023?",
+    "options": {
+      "A": "Man United",
+      "B": "Arsenal",
+      "C": "Liverpool",
+      "D": "Bayern"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q463",
+    "question": "Which club won the UCL in 1881?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q464",
+    "question": "Who won the Ballon d’Or in 1871?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q465",
+    "question": "Which club signed Christopher Nkunku from Leipzig for £52m in 2023?",
+    "options": {
+      "A": "Chelsea",
+      "B": "Man City",
+      "C": "Arsenal",
+      "D": "Bayern"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q466",
+    "question": "Which club won the UCL in 1879?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q467",
+    "question": "Who won the Ballon d’Or in 1869?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q468",
+    "question": "Which club signed Manuel Ugarte from Sporting for £51m in 2023?",
+    "options": {
+      "A": "PSG",
+      "B": "Man United",
+      "C": "Chelsea",
+      "D": "Bayern"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q469",
+    "question": "Which club won the UCL in 1877?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q470",
+    "question": "Who won the Ballon d’Or in 1867?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q471",
+    "question": "Which club signed Rasmus Hojlund from Atalanta for £72m in 2023?",
+    "options": {
+      "A": "Man United",
+      "B": "Arsenal",
+      "C": "Chelsea",
+      "D": "Bayern"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q472",
+    "question": "Which club won the UCL in 1875?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q473",
+    "question": "Who won the Ballon d’Or in 1865?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q474",
+    "question": "Which club signed Andre Onana from Inter for £47m in 2023?",
+    "options": {
+      "A": "Man United",
+      "B": "Arsenal",
+      "C": "Chelsea",
+      "D": "Bayern"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q475",
+    "question": "Which club won the UCL in 1873?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q476",
+    "question": "Who won the Ballon d’Or in 1863?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q477",
+    "question": "Which club signed Sofyan Amrabat from Fiorentina for £8m in 2023?",
+    "options": {
+      "A": "Man United",
+      "B": "Arsenal",
+      "C": "Chelsea",
+      "D": "Bayern"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q478",
+    "question": "Which club won the UCL in 1871?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q479",
+    "question": "Who won the Ballon d’Or in 1861?",
+    "options": {
+      "A": "Puskas",
+      "B": "Di Stefano",
+      "C": "Matthews",
+      "D": "No award given"
+    },
+    "correct": "D",
+    "category": "Football"
+  },
+  {
+    "id": "q480",
+    "question": "Which club signed Lisandro Martinez from Ajax for £55m in 2022?",
+    "options": {
+      "A": "Man United",
+      "B": "Arsenal",
+      "C": "Chelsea",
+      "D": "Bayern"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q481",
+    "question": "Which club won the UCL in 1869?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q482",
+    "question": "Which club signed Antony from Ajax for £82m in 2022?",
+    "options": {
+      "A": "Man United",
+      "B": "Arsenal",
+      "C": "Chelsea",
+      "D": "Bayern"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q483",
+    "question": "Which club won the UCL in 1867?",
+    "options": {
+      "A": "Real Madrid",
+      "B": "No tournament held",
+      "C": "AC Milan",
+      "D": "Benfica"
+    },
+    "correct": "B",
+    "category": "Football"
+  },
+  {
+    "id": "q484",
+    "question": "Which club signed Raphael Varane from Real Madrid for £34m in 2021?",
+    "options": {
+      "A": "Man United",
+      "B": "Liverpool",
+      "C": "Chelsea",
+      "D": "Arsenal"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q485",
+    "question": "Which club signed Achraf Hakimi from Inter for £60m in 2021?",
+    "options": {
+      "A": "PSG",
+      "B": "Bayern",
+      "C": "Chelsea",
+      "D": "Man City"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q486",
+    "question": "Which club signed Gianluigi Donnarumma from AC Milan on free in 2021?",
+    "options": {
+      "A": "PSG",
+      "B": "Bayern",
+      "C": "Chelsea",
+      "D": "Man City"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q487",
+    "question": "Which club signed Lionel Messi from Barcelona on free in 2021?",
+    "options": {
+      "A": "PSG",
+      "B": "Man City",
+      "C": "Chelsea",
+      "D": "Bayern"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q488",
+    "question": "Which club signed Sergio Ramos from Real Madrid on free in 2021?",
+    "options": {
+      "A": "PSG",
+      "B": "Bayern",
+      "C": "Chelsea",
+      "D": "Man City"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q489",
+    "question": "Which club signed Ben White from Brighton for £50m in 2021?",
+    "options": {
+      "A": "Arsenal",
+      "B": "Man United",
+      "C": "Chelsea",
+      "D": "Liverpool"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q490",
+    "question": "Which club signed Kieran Trippier from Atletico for £12m in 2022?",
+    "options": {
+      "A": "Newcastle",
+      "B": "Man United",
+      "C": "Chelsea",
+      "D": "Arsenal"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q491",
+    "question": "Which club signed Bruno Guimaraes from Lyon for £40m in 2022?",
+    "options": {
+      "A": "Newcastle",
+      "B": "Arsenal",
+      "C": "Chelsea",
+      "D": "Man United"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q492",
+    "question": "Which club signed Sven Botman from Lille for £32m in 2022?",
+    "options": {
+      "A": "Newcastle",
+      "B": "Arsenal",
+      "C": "Chelsea",
+      "D": "Man United"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q493",
+    "question": "Which club signed Alexander Isak from Real Sociedad for £63m in 2022?",
+    "options": {
+      "A": "Newcastle",
+      "B": "Arsenal",
+      "C": "Chelsea",
+      "D": "Man United"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q494",
+    "question": "Which club signed Matthias Ginter from Gladbach on free in 2022?",
+    "options": {
+      "A": "Freiburg",
+      "B": "Bayern",
+      "C": "Dortmund",
+      "D": "Leipzig"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q495",
+    "question": "Which club signed David Raum from Hoffenheim for £24m in 2022?",
+    "options": {
+      "A": "Leipzig",
+      "B": "Bayern",
+      "C": "Dortmund",
+      "D": "Freiburg"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q496",
+    "question": "Which club signed Niklas Sule from Bayern on free in 2022?",
+    "options": {
+      "A": "Dortmund",
+      "B": "Leipzig",
+      "C": "Freiburg",
+      "D": "Bayern"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q497",
+    "question": "Which club signed Nico Schlotterbeck from Freiburg for £18m in 2022?",
+    "options": {
+      "A": "Dortmund",
+      "B": "Bayern",
+      "C": "Leipzig",
+      "D": "Freiburg"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q498",
+    "question": "Which club signed Karim Adeyemi from Salzburg for £27m in 2022?",
+    "options": {
+      "A": "Dortmund",
+      "B": "Bayern",
+      "C": "Leipzig",
+      "D": "Freiburg"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q499",
+    "question": "Which club signed Ryan Gravenberch from Ajax for £17m in 2022?",
+    "options": {
+      "A": "Bayern",
+      "B": "Dortmund",
+      "C": "Leipzig",
+      "D": "Freiburg"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q500",
+    "question": "Which club signed Matthijs de Ligt from Juventus for £67m in 2022?",
+    "options": {
+      "A": "Bayern",
+      "B": "Dortmund",
+      "C": "Leipzig",
+      "D": "Freiburg"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q501",
+    "question": "Which club signed Sadio Mane from Liverpool for £27m in 2022?",
+    "options": {
+      "A": "Bayern",
+      "B": "Dortmund",
+      "C": "Leipzig",
+      "D": "Freiburg"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q502",
+    "question": "Which club signed Kalidou Koulibaly from Napoli for £33m in 2022?",
+    "options": {
+      "A": "Chelsea",
+      "B": "Man City",
+      "C": "Arsenal",
+      "D": "Liverpool"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q503",
+    "question": "Which club signed Gabriel Jesus from Man City for £45m in 2022?",
+    "options": {
+      "A": "Arsenal",
+      "B": "Chelsea",
+      "C": "Liverpool",
+      "D": "Man United"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q504",
+    "question": "Which club signed Raheem Sterling from Man City for £47m in 2022?",
+    "options": {
+      "A": "Chelsea",
+      "B": "Arsenal",
+      "C": "Liverpool",
+      "D": "Man United"
+    },
+    "correct": "A",
+    "category": "Football"
+  },
+  {
+    "id": "q505",
+    "question": "Which club signed Darwin Nunez from Benfica for £85m in 2022?",
+    "options": {
+      "A": "Liverpool",
+      "B": "Man City",
+      "C": "Chelsea",
+      "D": "Arsenal"
+    },
+    "correct": "A",
+    "category": "Football"
+  }
+]
