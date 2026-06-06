@@ -913,7 +913,7 @@ function scheduleAutoStart(scheduledDate) {
 
 // Attempt to start tournament with retry logic
 let autoStartRetryCount = 0;
-const MAX_AUTO_START_RETRIES = 6; // Retry for up to 30 seconds (6 x 5s)
+const MAX_AUTO_START_RETRIES = 720; // Retry for up to 1 hour (720 x 5s) — keeps waiting for players
 const GRACE_PERIOD_SECONDS = 10; // Wait 10s after min players reached to let more join
 let gracePeriodTimer = null;
 let gracePeriodStartCount = 0;
@@ -2143,6 +2143,10 @@ function evaluateRound(match, io) {
   // Broadcast elimination + match-ended to view screens
   if (loser) {
     broadcastToSpectators('player_eliminated', { username: loser.username });
+  } else if (p1Result === 'gameover' && p2Result === 'gameover') {
+    // Both eliminated (2-strike both-wrong) — notify view screens of BOTH
+    broadcastToSpectators('player_eliminated', { username: p1.username });
+    broadcastToSpectators('player_eliminated', { username: p2.username });
   }
   broadcastToSpectators('match_ended', {
     matchId: match.matchId,
