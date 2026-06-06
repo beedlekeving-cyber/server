@@ -293,11 +293,21 @@ function pairPlayersForRound(players, round, questionsPerMatch = 5) {
     const s1 = io.sockets.sockets.get(p1.socketId);
     const s2 = io.sockets.sockets.get(p2.socketId);
 
-    // Build match payload for each player - include their own info AND opponent info
+    // Build match payload for each player - include their own info AND opponent info.
+    // Include the full question objects (without `correct`) inline so clients don't
+    // depend on a separate question-bank fetch having completed — eliminates the
+    // race where match starts before /api/questions returns and players see no questions.
+    const sanitizedQuestions = (match.questions || []).map(q => ({
+      id: q.id,
+      question: q.question,
+      options: q.options,
+      category: q.category || 'General',
+    }));
     const basePayload = {
       matchId: match.matchId,
       matchSeed: match.seed,
       questionIds: (match.questions || []).map(q => q.id),
+      questions: sanitizedQuestions,
       round,
       roundLabel: label,
       totalQuestions: match.questions?.length || questionsPerMatch,
@@ -592,6 +602,12 @@ function tryInstantQueuePair() {
         matchId: match.matchId,
         matchSeed: match.seed,
         questionIds: (match.questions || []).map(q => q.id),
+        questions: (match.questions || []).map(q => ({
+          id: q.id,
+          question: q.question,
+          options: q.options,
+          category: q.category || 'General',
+        })),
         round: 1,
         totalQuestions: questionsPerMatch,
         isTournament: true,
@@ -1975,11 +1991,18 @@ function evaluateRound(match, io) {
       cleanupMatchTimer(match.matchId);
       startMatchTimer(match);
       
-      // Send the next question to both players
+      // Send the next question to both players (inline the question object so
+      // clients don't depend on their local bank cache being loaded).
       const nextQuestion = match.questions[match.questionIndex];
       const nextQuestionPayload = {
         questionIndex: match.questionIndex,
         questionId: nextQuestion.id,
+        question: {
+          id: nextQuestion.id,
+          question: nextQuestion.question,
+          options: nextQuestion.options,
+          category: nextQuestion.category || 'General',
+        },
         bothCorrectCount: match.bothCorrectCount,
         totalQuestions: match.questions.length,
         message: 'Both correct! Here\'s another question.',
@@ -2050,11 +2073,19 @@ function evaluateRound(match, io) {
         cleanupMatchTimer(match.matchId);
         startMatchTimer(match);
         
-        // Send the next question to both players
+        // Send the next question to both players. Include the full question
+        // object (sans `correct`) so the client doesn't depend on its local
+        // bank cache — avoids "no question shown" race.
         const nextQuestion = match.questions[match.questionIndex];
         const nextQuestionPayload = {
           questionIndex: match.questionIndex,
           questionId: nextQuestion.id,
+          question: {
+            id: nextQuestion.id,
+            question: nextQuestion.question,
+            options: nextQuestion.options,
+            category: nextQuestion.category || 'General',
+          },
           bothWrongCount: match.bothWrongCount,
           totalQuestions: match.questions.length,
           message: 'Both wrong! Try another question.',
