@@ -146,7 +146,7 @@ const matchTimers = new Map();
 // POST_MATCH_DELAY is the pause between "last match in a round ended" and
 // "next round pairs". Kept short so the bracket flies once every match is done.
 const TOURNAMENT_PACING = {
-  QUESTION_TIME_SECONDS: 10,       // Seconds per question
+  QUESTION_TIME_SECONDS: 7,        // Seconds per question
   PRE_MATCH_COUNTDOWN: 1,          // Seconds shown before each match starts (kept short so question appears almost immediately)
   BETWEEN_ROUNDS_DELAY: 2,         // Seconds shown after a round_result before next question
   POST_MATCH_DELAY: 1,             // Seconds between last match of a round ending and next round pairing
@@ -734,7 +734,17 @@ async function declareTournamentChampion(player) {
   }
 
   console.log(`[tournament] 🏆 CHAMPION: ${player.username} (${actualWins} wins)`);
-  
+
+  // Mark the tournament as fully ENDED so background state_sync events don't
+  // bounce the champion back to a "Final / Finding opponent" screen mid-chat.
+  // (Bug: state_sync was checking winnersQueue and still saw the champion in it,
+  // returning phase='waiting_match' on the next visibility-change sync.)
+  tournamentConfig.tournamentStarted = false;
+  tournamentConfig.tournamentEnded = true;
+  winnersQueue.clear();
+  bracketWinners.clear();
+  playersInMatch.clear();
+
   // Mark champion status in registeredPlayers for guard checks
   if (registered) {
     registered.status = 'champion';
