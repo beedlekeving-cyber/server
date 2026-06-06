@@ -2340,6 +2340,13 @@ function evaluateRound(match, io) {
         console.log(`[tournament R${round}] Both wrong & all questions exhausted — eliminating ${p1.username} and ${p2.username}`);
         const s1 = io.sockets.sockets.get(p1.socketId);
         const s2 = io.sockets.sockets.get(p2.socketId);
+        // Send to the match room so BOTH players reliably receive it even if
+        // a socket id was renewed during reconnect.
+        io.to(match.matchId).emit('tournament_eliminated', {
+          message: 'Both players answered incorrectly. You have been eliminated.',
+          round,
+        });
+        // Direct emit as a fallback (covers a player who left the room early).
         if (s1) s1.emit('tournament_eliminated', {
           message: 'Both players answered incorrectly. You have been eliminated.',
           round,
