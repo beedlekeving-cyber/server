@@ -794,9 +794,14 @@ function startTournament() {
   if (questionBank.length === 0) return { error: 'No questions available. Admin must add questions first.' };
 
   tournamentConfig.tournamentStarted = true;
+  tournamentConfig.tournamentEnded = false;
   tournamentConfig.tournamentId = tournamentConfig.scheduledDate || ('tournament_' + Date.now());
   currentRound = 1;
   bracketWinners.clear();
+
+  // Once the tournament has truly started, no scheduled countdown event from
+  // the original schedule should fire any more.
+  cancelScheduledStart();
 
   // Update tournament status in DB
   TournamentSchedule.findOneAndUpdate(
@@ -894,13 +899,26 @@ function startTournament() {
   return { ok: true, playerCount: players.length, matches: matchPairs, round: 1, roundLabel: label };
 }
 
-// Schedule auto-start timer for a tournament
-function scheduleAutoStart(scheduledDate) {
-  // Clear any existing timer
+// Track countdown-warning timeouts so we can cancel them on force-start / reset.
+let scheduledCountdownTimers = [];
+
+function cancelScheduledStart() {
   if (autoStartTimer) {
     clearTimeout(autoStartTimer);
     autoStartTimer = null;
   }
+  for (const t of scheduledCountdownTimers) clearTimeout(t);
+  scheduledCountdownTimers = [];
+  if (gracePeriodTimer) {
+    clearInterval(gracePeriodTimer);
+    gracePeriodTimer = null;
+  }
+}
+
+// Schedule auto-start timer for a tournament
+function scheduleAutoStart(scheduledDate) {
+  // Clear any existing timers (autoStart + countdown warnings + grace)
+  cancelScheduledStart();
 
   const startTime = new Date(scheduledDate).getTime();
   const now = Date.now();
@@ -931,13 +949,17 @@ function scheduleAutoStart(scheduledDate) {
   countdownWarnings.forEach(({ ms, msg }) => {
     const warningDelay = delay - ms;
     if (warningDelay > 0) {
-      setTimeout(() => {
-        io.emit('tournament_countdown', { 
-          secondsRemaining: Math.round(ms / 1000), 
-          message: `Tournament starts in ${msg}!` 
+      const tid = setTimeout(() => {
+        // Guard: if the tournament has already started (force-start) or ended,
+        // don't fire stale countdown banners.
+        if (tournamentConfig.tournamentStarted || tournamentConfig.tournamentEnded) return;
+        io.emit('tournament_countdown', {
+          secondsRemaining: Math.round(ms / 1000),
+          message: `Tournament starts in ${msg}!`
         });
         console.log(`[tournament] ⏱️  Countdown: ${msg} remaining`);
       }, warningDelay);
+      scheduledCountdownTimers.push(tid);
     }
   });
 
@@ -3163,11 +3185,11 @@ app.post('/admin/tournament/start', (req, res) => {
     return res.status(400).json({ error: 'No tournament scheduled. Set a date first.' });
   }
 
-  // Clear auto-start timer since admin is starting manually
-  if (autoStartTimer) {
-    clearTimeout(autoStartTimer);
-    autoStartTimer = null;
-  }
+  // Force-start: cancel EVERY scheduled timer for the original schedule
+  // (auto-start + all countdown warnings + grace period). Otherwise stale
+  // "Tournament starts in 1 minute!" banners fire mid-game and shove players
+  // into a "Final / Finding opponent" screen even after a champion is declared.
+  cancelScheduledStart();
 
   const result = startTournament();
   if (result.error) {
