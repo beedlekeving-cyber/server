@@ -147,7 +147,7 @@ const matchTimers = new Map();
 // "next round pairs". Kept short so the bracket flies once every match is done.
 const TOURNAMENT_PACING = {
   QUESTION_TIME_SECONDS: 10,       // Seconds per question
-  PRE_MATCH_COUNTDOWN: 3,          // Seconds shown before each match starts
+  PRE_MATCH_COUNTDOWN: 1,          // Seconds shown before each match starts (kept short so question appears almost immediately)
   BETWEEN_ROUNDS_DELAY: 2,         // Seconds shown after a round_result before next question
   POST_MATCH_DELAY: 1,             // Seconds between last match of a round ending and next round pairing
   DISCONNECT_GRACE_SECONDS: 25,    // How long a disconnected player has to reconnect before forfeit
@@ -248,6 +248,18 @@ function shuffleArray(arr) {
 // Pair a list of players into matches for the current round.
 // Returns the list of match descriptors created.
 function pairPlayersForRound(players, round, questionsPerMatch = 5) {
+  // Safety: tournament matches MUST have questions loaded — otherwise both
+  // players see no question, time out, and get auto-eliminated (the bug the
+  // user reported). Fail loudly so the admin sees the cause.
+  if (!Array.isArray(questionBank) || questionBank.length === 0) {
+    console.error(`[tournament] ❌ Cannot pair — question bank is EMPTY (length=${questionBank?.length ?? 'undef'})`);
+    io.emit('tournament_error', {
+      message: 'Question bank is empty. Admin must reload questions before pairing.',
+      round,
+    });
+    return [];
+  }
+
   shuffleArray(players);
   const matchPairs = [];
   const playersEntering = players.length;
