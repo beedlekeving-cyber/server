@@ -487,11 +487,11 @@ function advanceToNextRound(completedRound) {
 }
 
 // NEW: Server-driven match timer
-function startMatchTimer(match) {
-  const QUESTION_TIME_MS = TOURNAMENT_PACING.QUESTION_TIME_SECONDS * 1000;
+function startMatchTimer(match, customSeconds) {
+  const seconds = customSeconds || TOURNAMENT_PACING.QUESTION_TIME_SECONDS;
   const COUNTDOWN_INTERVAL_MS = 1000; // emit countdown every second
 
-  let timeLeft = TOURNAMENT_PACING.QUESTION_TIME_SECONDS;
+  let timeLeft = seconds;
   match.questionStartTime = Date.now();
 
   const countdownInterval = setInterval(() => {
@@ -515,7 +515,7 @@ function startMatchTimer(match) {
         if (player.answerTime === null && match.active) {
           // Player didn't answer in time — mark as timed out
           player.answer = null;
-          player.answerTime = TOURNAMENT_PACING.QUESTION_TIME_SECONDS;
+          player.answerTime = seconds;
           needsEval = true;
         }
       }
@@ -1678,11 +1678,20 @@ io.on('connection', (socket) => {
 
       console.log(`[tournament] ${username} waiting (${registeredPlayers.size}/${tournamentConfig.maxPlayers}, ${activeCount} active)`);
 
-      // Auto-start the moment we hit the cap
+      // Auto-start the moment we hit the cap — BUT only if the scheduled time
+      // has already arrived. The tournament must respect the scheduled start time:
+      // it must NOT start early just because players filled up. Admin can still
+      // force-start via the admin button.
       if (registeredPlayers.size >= tournamentConfig.maxPlayers) {
-        console.log(`[tournament] 🚀 Reached max — auto-starting`);
-        io.emit('tournament_countdown', { secondsRemaining: 0, message: 'Tournament starting NOW!' });
-        setImmediate(() => attemptTournamentStart());
+        const schedTs = tournamentConfig.scheduledDate ? new Date(tournamentConfig.scheduledDate).getTime() : 0;
+        const scheduledTimeReached = !tournamentConfig.scheduledDate || Date.now() >= schedTs;
+        if (scheduledTimeReached) {
+          console.log(`[tournament] 🚀 Reached max — auto-starting`);
+          io.emit('tournament_countdown', { secondsRemaining: 0, message: 'Tournament starting NOW!' });
+          setImmediate(() => attemptTournamentStart());
+        } else {
+          console.log(`[tournament] Reached cap (${registeredPlayers.size}/${tournamentConfig.maxPlayers}) but scheduled time hasn't arrived — waiting for ${tournamentConfig.scheduledDate}`);
+        }
       }
       return;
     }
@@ -1982,15 +1991,21 @@ function evaluateRound(match, io) {
       p2Result = 'both_correct';
       match.questionIndex++;
       match.questionStartTime = Date.now();
-      
+
       // Reset answers BEFORE sending next question
       p1.answer = null; p1.answerTime = null;
       p2.answer = null; p2.answerTime = null;
-      
-      // Restart server timer for next question
+
+      // After a both-correct, the next question is "harder" — give players a
+      // shorter time limit so it's a tiebreaker. The questions themselves are
+      // identical pool (no difficulty metadata yet); the shorter window is the
+      // difficulty proxy.
+      const HARD_QUESTION_SECONDS = Math.max(5, Math.floor(TOURNAMENT_PACING.QUESTION_TIME_SECONDS / 2));
+
+      // Restart server timer for next question with the shortened "hard" timeout
       cleanupMatchTimer(match.matchId);
-      startMatchTimer(match);
-      
+      startMatchTimer(match, HARD_QUESTION_SECONDS);
+
       // Send the next question to both players (inline the question object so
       // clients don't depend on their local bank cache being loaded).
       const nextQuestion = match.questions[match.questionIndex];
@@ -2005,7 +2020,9 @@ function evaluateRound(match, io) {
         },
         bothCorrectCount: match.bothCorrectCount,
         totalQuestions: match.questions.length,
-        message: 'Both correct! Here\'s another question.',
+        questionTime: HARD_QUESTION_SECONDS,
+        isHard: true,
+        message: '⚡ Both correct! HARD question — faster timer!',
         isTournament: !!match.tournamentRound,
       };
       
@@ -2408,9 +2425,17 @@ app.post('/api/users', async (req, res) => {
         console.log(`[tournament] ${username} registered via REST (${registeredPlayers.size}/${tournamentConfig.maxPlayers})`);
 
         if (registeredPlayers.size >= tournamentConfig.maxPlayers) {
-          console.log(`[tournament] 🚀 Reached max ${tournamentConfig.maxPlayers} — auto-starting`);
-          io.emit('tournament_countdown', { secondsRemaining: 0, message: 'Tournament starting NOW!' });
-          setImmediate(() => attemptTournamentStart());
+          // Same rule as socket path: respect scheduled time. Only auto-start
+          // early if no schedule is set or the scheduled time has already arrived.
+          const schedTs = tournamentConfig.scheduledDate ? new Date(tournamentConfig.scheduledDate).getTime() : 0;
+          const scheduledTimeReached = !tournamentConfig.scheduledDate || Date.now() >= schedTs;
+          if (scheduledTimeReached) {
+            console.log(`[tournament] 🚀 Reached max ${tournamentConfig.maxPlayers} — auto-starting`);
+            io.emit('tournament_countdown', { secondsRemaining: 0, message: 'Tournament starting NOW!' });
+            setImmediate(() => attemptTournamentStart());
+          } else {
+            console.log(`[tournament] Reached cap but scheduled time hasn't arrived — waiting`);
+          }
         }
       }
 
