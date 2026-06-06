@@ -461,6 +461,18 @@ function advanceToNextRound(completedRound) {
     playerCount: connectedAdvancers.length,
     questionsPerMatch,
   });
+
+  // If exactly 2 advancers, they are the finalists — notify each personally.
+  if (connectedAdvancers.length === 2) {
+    connectedAdvancers.forEach(p => {
+      const s = io.sockets.sockets.get(p.socketId);
+      if (s) s.emit('tournament_final_notice', {
+        message: '🏆 You are in the Final! One more match to become Champion!',
+        round: nextRound,
+      });
+    });
+  }
+
   pairPlayersForRound(connectedAdvancers, nextRound, questionsPerMatch);
 }
 
@@ -1997,14 +2009,16 @@ function evaluateRound(match, io) {
   } else {
     // Both wrong
     if (match.tournamentRound) {
-      // Tournament: give another question instead of eliminating both
+      // Tournament: give ONE more chance; if both wrong again, eliminate both
       match.bothWrongCount = (match.bothWrongCount || 0) + 1;
-      
-      // Check if we've exhausted all questions in current set
-      if (match.questionIndex >= match.questions.length - 1) {
+
+      if (match.bothWrongCount >= 2) {
+        console.log(`[match] ${match.matchId} both wrong ${match.bothWrongCount}x — eliminating both`);
+        p1Result = 'gameover'; p2Result = 'gameover'; matchOver = true;
+      } else if (match.questionIndex >= match.questions.length - 1) {
         const usedIds = new Set(match.questions.map(q => q.id));
         const availableQuestions = questionBank.filter(q => !usedIds.has(q.id));
-        
+
         if (availableQuestions.length > 0) {
           const newQuestions = seededShuffle(availableQuestions, match.matchId + '_bw_' + match.bothWrongCount)
             .slice(0, 5);
