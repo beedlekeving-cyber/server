@@ -919,6 +919,9 @@ function cancelScheduledStart() {
 function scheduleAutoStart(scheduledDate) {
   // Clear any existing timers (autoStart + countdown warnings + grace)
   cancelScheduledStart();
+  // Reset retry counter and end-flag so a previous tournament can't block this one.
+  autoStartRetryCount = 0;
+  tournamentConfig.tournamentEnded = false;
 
   const startTime = new Date(scheduledDate).getTime();
   const now = Date.now();
@@ -974,7 +977,7 @@ function scheduleAutoStart(scheduledDate) {
 // Attempt to start tournament with retry logic
 let autoStartRetryCount = 0;
 const MAX_AUTO_START_RETRIES = 720; // Retry for up to 1 hour (720 x 5s) — keeps waiting for players
-const GRACE_PERIOD_SECONDS = 10; // Wait 10s after min players reached to let more join
+const GRACE_PERIOD_SECONDS = 2; // Brief buffer after min players reached — keep it short so scheduled start is near-immediate
 let gracePeriodTimer = null;
 let gracePeriodStartCount = 0;
 
@@ -3092,8 +3095,12 @@ app.post('/admin/tournament/set-schedule', requireAdmin, async (req, res) => {
 
     tournamentConfig.scheduledDate = scheduledDate;
     tournamentConfig.tournamentStarted = false;
+    tournamentConfig.tournamentEnded = false;
+    tournamentConfig.tournamentId = null;
     registeredPlayers.clear();
     bracketWinners.clear();
+    winnersQueue.clear();
+    playersInMatch.clear();
     currentRound = 1;
 
     scheduleAutoStart(scheduledDate);
@@ -3130,8 +3137,12 @@ app.post('/admin/tournament/schedule', requireAdmin, async (req, res) => {
     // Update in-memory config
     tournamentConfig.scheduledDate = scheduledDate;
     tournamentConfig.tournamentStarted = false;
+    tournamentConfig.tournamentEnded = false;
+    tournamentConfig.tournamentId = null;
     registeredPlayers.clear();
     bracketWinners.clear();
+    winnersQueue.clear();
+    playersInMatch.clear();
     currentRound = 1;
     scheduleAutoStart(scheduledDate);
     io.emit('tournament_config_updated', { scheduledDate, registrationOpen: true, tournamentStarted: false });
