@@ -162,7 +162,7 @@ const registeredPlayers = new Map(); // deviceId → { username, deviceId, joine
 const ARENA_EDITIONS = [
   'Quiz Arena: General Knowledge Edition',
   'Quiz Arena: Football Edition',
-  'Quiz Arena: World Cup Edition',
+  'Quiz Arena: FIFA World Cup Edition',
   'Quiz Arena: Movie Quiz Edition',
   'Quiz Arena: Tech Quiz Edition',
   'Quiz Arena: Music Edition',
