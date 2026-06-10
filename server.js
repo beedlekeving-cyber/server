@@ -41,7 +41,7 @@ const io = new Server(server, {
 
 app.use(cors());
 app.use(express.json({ limit: '10kb' }));
-app.get('/', (_, res) => res.send('QuizDuel Server running ✅'));
+app.get('/', (_, res) => res.send('Quiz Arena Server running ✅'));
 
 // ─── In-memory state ──────────────────────────────────────────────────────────
 const lobby       = new Map();   // deviceId → { socketId, username, joinedAt }
@@ -158,12 +158,23 @@ const TOURNAMENT_PACING = {
 // is reached, or admin can force-start with any count ≥ 2.
 const MAX_TOURNAMENT_PLAYERS = 400;
 const registeredPlayers = new Map(); // deviceId → { username, deviceId, joinedAt, socketId }
+// Quiz Arena edition catalogue. Admin picks one of these per tournament.
+const ARENA_EDITIONS = [
+  'Quiz Arena: General Knowledge Edition',
+  'Quiz Arena: Football Edition',
+  'Quiz Arena: World Cup Edition',
+  'Quiz Arena: Movie Quiz Edition',
+  'Quiz Arena: Tech Quiz Edition',
+  'Quiz Arena: Music Edition',
+];
+
 let tournamentConfig = {
   scheduledDate: null,            // ISO string — when set, registration mode is active
   tournamentStarted: false,       // Has the admin started the tournament?
   maxPlayers: MAX_TOURNAMENT_PLAYERS,
   rewardAmount: '',               // Admin-configured display string e.g. "₦20,000"
   tournamentId: null,             // Stable id used to scope WinnerSubmission docs
+  edition: 'Quiz Arena: General Knowledge Edition', // Branding for the current tournament
 };
 
 // Compute a human round name from the player count entering that round.
@@ -753,23 +764,35 @@ async function declareTournamentChampion(player) {
   const rewardAmount = tournamentConfig.rewardAmount || '';
   const tournamentId = tournamentConfig.tournamentId || tournamentConfig.scheduledDate || null;
 
+  const startedWith = tournamentConfig.startedWithPlayerCount || tournamentConfig.initialPlayerCount || 0;
+  const outlasted = Math.max(0, startedWith - 1);
+
   io.emit('tournament_champion', {
     username: player.username,
     deviceId: player.deviceId,
     rewardAmount,
     tournamentId,
+    edition: tournamentConfig.edition,
+    outlasted,
+    startedWith,
   });
   broadcastToSpectators('tournament_champion', {
     username: player.username,
     rewardAmount,
+    edition: tournamentConfig.edition,
+    outlasted,
+    startedWith,
   });
 
   const s = io.sockets.sockets.get(player.socketId);
   if (s) s.emit('you_are_champion', {
-    message: '🏆 Congratulations! You are the Tournament Champion!',
+    message: '🏆 Congratulations! You are the Champion of the Arena!',
     username: player.username,
     rewardAmount,
     tournamentId,
+    edition: tournamentConfig.edition,
+    outlasted,
+    startedWith,
   });
 
   // Update leaderboard
@@ -870,6 +893,10 @@ function startTournament() {
   const label = roundLabel(1, players.length);
   console.log(`[tournament] Using ${questionsPerMatch} questions per match for ${players.length} players (clean bracket)`);
 
+  // Snapshot the player count so the champion screen can report it accurately
+  // even after eliminated players' records are cleaned up.
+  tournamentConfig.startedWithPlayerCount = players.length;
+
   // Broadcast tournament start to all clients
   io.emit('tournament_started', {
     message: 'Tournament is starting!',
@@ -881,6 +908,7 @@ function startTournament() {
     rewardAmount: tournamentConfig.rewardAmount,
     maxPlayers: tournamentConfig.maxPlayers,
     tournamentId: tournamentConfig.tournamentId,
+    edition: tournamentConfig.edition,
   });
 
   // Pair the selected (power-of-2) players for Round 1
@@ -2703,9 +2731,38 @@ app.post('/admin/tournament/reward', requireAdmin, (req, res) => {
     scheduledDate: tournamentConfig.scheduledDate,
     tournamentStarted: tournamentConfig.tournamentStarted,
     maxPlayers: tournamentConfig.maxPlayers,
+    edition: tournamentConfig.edition,
   });
   console.log(`[admin] Reward amount set: ${tournamentConfig.rewardAmount}`);
   res.json({ ok: true, rewardAmount: tournamentConfig.rewardAmount });
+});
+
+// Admin: list available editions
+app.get('/admin/tournament/editions', requireAdmin, (_req, res) => {
+  res.json({ editions: ARENA_EDITIONS, current: tournamentConfig.edition });
+});
+
+// Public: anyone (player, ViewScreen) can read the current edition.
+app.get('/api/tournament/edition', (_req, res) => {
+  res.json({ edition: tournamentConfig.edition });
+});
+
+// Admin: set the current edition (e.g. "Quiz Arena: Football Edition")
+app.post('/admin/tournament/edition', requireAdmin, (req, res) => {
+  const { edition } = req.body || {};
+  if (typeof edition !== 'string' || !ARENA_EDITIONS.includes(edition)) {
+    return res.status(400).json({ error: 'Invalid edition', allowed: ARENA_EDITIONS });
+  }
+  tournamentConfig.edition = edition;
+  io.emit('tournament_config_updated', {
+    rewardAmount: tournamentConfig.rewardAmount,
+    scheduledDate: tournamentConfig.scheduledDate,
+    tournamentStarted: tournamentConfig.tournamentStarted,
+    maxPlayers: tournamentConfig.maxPlayers,
+    edition: tournamentConfig.edition,
+  });
+  console.log(`[admin] Edition set: ${tournamentConfig.edition}`);
+  res.json({ ok: true, edition: tournamentConfig.edition });
 });
 
 // In-memory store used when Mongo is not connected
@@ -3020,6 +3077,7 @@ app.get('/tournament/status', (_, res) => {
     activeCount: activePlayers.length,
     maxPlayers: tournamentConfig.maxPlayers,
     rewardAmount: tournamentConfig.rewardAmount,
+    edition: tournamentConfig.edition,
     tournamentId: tournamentConfig.tournamentId || tournamentConfig.scheduledDate || null,
     currentRound,
     questionBankSize: questionBank.length,
@@ -3655,7 +3713,7 @@ async function startServer() {
   }
 
   server.listen(PORT, () => {
-    console.log(`\n🚀 QuizDuel server listening on http://localhost:${PORT}`);
+    console.log(`\n🚀 Quiz Arena server listening on http://localhost:${PORT}`);
     if (!mongoConnected) {
       console.log('⚠️  Running without MongoDB - some features may be limited\n');
     } else {
